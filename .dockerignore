@@ -1,0 +1,4 @@
+node_modules
+ClientApp/node_modules
+ClientApp/npm-debug.log
+
