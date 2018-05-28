@@ -10,6 +10,7 @@ import { IndicatorGroup } from '../../shared/models/indicatorGroup';
 export class IndicatorGroupService {
 
   public static API_URL = 'api/IndicatorGroups/';
+  public static CALCULATE = IndicatorGroupService.API_URL + 'Calculate/';
 
   constructor(public http: HttpClient) { }
 
@@ -19,6 +20,18 @@ export class IndicatorGroupService {
 
   getIndicatorGroup(indicatorGroupId: number | string): Observable<IndicatorGroup> {
     return this.http.get<IndicatorGroup>(IndicatorGroupService.API_URL + indicatorGroupId);
+  }
+
+  calculateIndicatorGroup(indicatorGroup: number): Observable<number[]> {
+    return this.http.get<number[]>(IndicatorGroupService.CALCULATE + indicatorGroup);
+  }
+
+  calculateIndicatorGroupYear(indicatorGroup: number, year: number): Observable<number[]> {
+    return this.http.get<number[]>(IndicatorGroupService.CALCULATE + indicatorGroup + '/' + year);
+  }
+
+  calculateIndicatorGroupYearMonth(indicatorGroup: number, year: number, month: number): Observable<number[]> {
+    return this.http.get<number[]>(IndicatorGroupService.CALCULATE + indicatorGroup + '/' + year + '/' + month);
   }
 
 }

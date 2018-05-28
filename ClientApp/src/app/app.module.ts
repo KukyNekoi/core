@@ -5,6 +5,7 @@ import { HttpClientModule } from '@angular/common/http';
 import { RouterModule } from '@angular/router';
 
 import { AppComponent } from './app.component';
+import { BsDropdownModule } from 'ngx-bootstrap/dropdown';
 import { HeaderComponent } from './components/header/header.component';
 import { FooterComponent } from './components/footer/footer.component';
 import { IndicatorHomeComponent } from './components/indicator-home/indicator-home.component';
@@ -25,6 +26,7 @@ import { IndicatorGroupService } from './services/indicator-group/indicator-grou
 import { RegistryService } from './services/registry/registry.service';
 import { FileService } from './services/file/file.service';
 
+import { RegistryEditorComponent } from './components/indicator-detail/registry-editor/registry-editor.component';
 
 @NgModule({
   declarations: [
@@ -35,6 +37,11 @@ import { FileService } from './services/file/file.service';
     IndicatorHomeComponent,
     IndicatorDetailComponent,
     IndicatorDisplayComponent,
+    RegistryFormComponent,
+    FileDocumentFormComponent,
+    LinkDocumentFormComponent,
+    RegistryDetailsComponent,
+    RegistryEditorComponent,
     ResultDisplayComponent,
     ResultHomeComponent,
     RegistryFormComponent,
@@ -43,22 +50,21 @@ import { FileService } from './services/file/file.service';
     LinkDocumentFormComponent
   ],
   imports: [
+    BsDropdownModule.forRoot(),
     NgbModule.forRoot(),
     BrowserModule.withServerTransition({ appId: 'ng-cli-universal' }),
     HttpClientModule,
     ModalModule.forRoot(),
     FormsModule,
+    ModalModule.forRoot(),
 
     RouterModule.forRoot([
       { path: 'indicator/:idIndicator', component: IndicatorDetailComponent },
-      { path: 'indicator-add-registry', component: RegistryFormComponent },
       { path: 'registry/:id', component: RegistryDetailsComponent },
       { path: 'indicatorGroup/:idIndicatorGroup',   component: IndicatorHomeComponent },
-      { path: 'registry-add-file-document', component: FileDocumentFormComponent },
-      { path: 'registry-add-link-document', component: LinkDocumentFormComponent },
       { path: 'home',        component: ResultHomeComponent },
       { path: '',            component: ResultHomeComponent },
-      { path: '**',          component: ResultHomeComponent }
+      { path: '**',          component: ResultHomeComponent },
     ])
   ],
   providers: [IndicatorService, IndicatorGroupService, RegistryService, FileService],

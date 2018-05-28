@@ -5,21 +5,46 @@
         <h2>{{ indicatorGroup.name }}</h2>
       </div>
 
-      <!--Dropdown Year Filter-->
-      Seleccione los años a calcular:
-      <div ngbDropdown class="d-inline-block dropdown">
-        <button class="btn btn-primary" id="dropdownBasic1" ngbDropdownToggle>{{ selection }} <i class="fa fa-caret-down"></i> </button>             
-        <ul class="dropdown-menu" ngbDropdownMenu aria-labelledby="dropdownBasic1">          
-          <li><a class="dropdown-item" (click)="calcularIndicadores('Todos los años')">Todos los años</a></li>          
-          <li *ngFor="let year of years"><a class="dropdown-item" (click)="calcularIndicadores(year)">Año {{ year }}</a></li>          
-        </ul>
+      <!--Dropdown Filters-->
+      <div class="row">
+        <!--Dropdown Year Filter-->
+        <div class="col-md-6">          
+          Seleccione el año a calcular:
+          <br>
+          <div class="btn-group" dropdown>
+            <button id="button-basic" dropdownToggle type="button" class="btn btn-primary dropdown-toggle" aria-controls="dropdown-basic">
+              {{ selectionYear }} <span class="caret"></span>
+            </button>
+            <ul id="dropdown-basic" *dropdownMenu class="dropdown-menu"
+                role="menu" aria-labelledby="button-basic">
+              <li ><a class="dropdown-item" (click)="calculateIndicators(allYears, '')">Todos los años</a></li>          
+              <li *ngFor="let year of years"><a class="dropdown-item" (click)="calculateIndicators(year, '')">Año {{ year }}</a></li>
+            </ul>
+          </div>
+        </div>
+        <!--Dropdown Month Filter-->
+        <div class="col-md-6">
+          Seleccione el mes a calcular:
+          <br>
+          <div class="btn-group" dropdown [isDisabled]="isMonthDisabled">
+            <button id="button-basic" dropdownToggle type="button" class="btn btn-primary dropdown-toggle" aria-controls="dropdown-basic">
+              {{ selectionMonth }} <span class="caret"></span>
+            </button>
+            <ul id="dropdown-basic" *dropdownMenu class="dropdown-menu"
+                role="menu" aria-labelledby="button-basic">
+              <li ><a class="dropdown-item" (click)="calculateIndicators('', allMonths)">Todos los meses</a></li>          
+              <li *ngFor="let month of monthsOfTheYear"><a class="dropdown-item" (click)="calculateIndicators('', month)">{{ month }}</a></li>
+            </ul>
+          </div>
+        </div>
       </div>
-      <br>
+
 
       <!-- end col-md-12 -->
     </div>
     <!-- end container -->
   </section>
+  <br>
   <!-- end page-section -->
   <section>
     <div id="statistic-section" class="statistic-bg" data-stellar-background-ratio="0">
@@ -33,14 +58,14 @@
             <div class="col-xs-6 col-sm-3 col-md-4">
               <a class="active" href="/indicator/{{ indicator.indicatorID }}">
                 <div class="services-content">
-                  <div class="statistic-percent" [attr.data-perc]="'indicatorResults[indicator.indicatorID-1]'">
+                  <div class="statistic-percent" [attr.data-perc]="indicatorResults[i]">
                     <div class="fact">
 
                       <div *ngIf="indicator.type == 2; else noPercent">
-                        <span class="percentfactor">{{ indicatorResults[indicator.indicatorID-1] | number:'.0-2'}}%</span>
+                        <span class="percentfactor">{{ indicatorResults[i] | number:'.0-2'}}%</span>
                       </div>
                       <ng-template #noPercent>
-                         <span class="percentfactor">{{ indicatorResults[indicator.indicatorID-1] | number:'.0-2'}}</span>
+                         <span class="percentfactor">{{ indicatorResults[i] | number:'.0-2'}}</span>
                       </ng-template>
                       
                       <p>{{ indicator.name }}</p>
@@ -62,6 +87,7 @@
   </section>
     <!-- End statistic section -->
 </div>
+
 
 <ng-template #loading>
     Cargando...

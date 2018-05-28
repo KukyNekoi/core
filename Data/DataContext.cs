@@ -53,6 +53,7 @@ namespace think_agro_metrics.Data
             modelBuilder.Entity<DefaultRegistry>();
             modelBuilder.Entity<ActivityRegistry>();
             modelBuilder.Entity<QuantityRegistry>();
+            modelBuilder.Entity<PercentRegistry>();
             modelBuilder.Entity<LinkRegistry>();
         }
 

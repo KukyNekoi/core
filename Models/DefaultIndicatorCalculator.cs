@@ -22,5 +22,16 @@ namespace think_agro_metrics.Models
             }
             return counter;
         }
+
+        public double Calculate(ICollection<Registry> registries, int year, int month)
+        {   
+            int counter = 0;
+            foreach (Registry registry in registries) {
+                if(registry.Date.Year == year && registry.Date.Month == month){
+                    counter++;
+                }
+            }
+            return counter;
+        }
     }
 }

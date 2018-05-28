@@ -121,6 +121,114 @@ namespace think_agro_metrics.Controllers
             return Ok(indicatorGroup);
         }
 
+        // GET: api/IndicatorGroups/Calculate/1 (group= 1)
+        [Route("Calculate/{id:int}")]
+        public async Task<IActionResult> CalculateIndicators([FromRoute] int id)
+        {
+            if (!ModelState.IsValid)
+            {
+                return BadRequest(ModelState);
+            }
+
+            // Load from the DB the IndicatorGroups with its Indicators, Registries, Documents, and Links
+            _context.IndicatorGroups.Include(x => x.Indicators)
+                .ThenInclude(x => x.Registries).ToList();
+            _context.LinkRegistries.Include(x => x.Links).ToList();
+
+            var indicatorGroup = await _context.IndicatorGroups.SingleOrDefaultAsync(m => m.IndicatorGroupID == id);
+            
+            // If the specified indicator group doesn't exist, show NotFound
+            if (indicatorGroup == null)
+            {
+                return NotFound();
+            }
+
+            // List of the results of every indicator of the group
+            List<double> list = new List<double>();
+
+            // Calculate every indicator of the group
+            foreach (Indicator indicator in indicatorGroup.Indicators)
+            {
+                indicator.Type = indicator.Type; // Assign the IndicatorCalculator according to the Indicator's Type
+                list.Add(indicator.IndicatorCalculator.Calculate(indicator.Registries));
+            }
+
+            // Return the list with the results
+            return Ok(list);
+        }
+
+        // GET: api/IndicatorGroups/Calculate/1/2018 (group= 1, year= 2018)
+        [Route("Calculate/{id:int}/{year:int}")]
+        public async Task<IActionResult> CalculateIndicators([FromRoute] int id, [FromRoute] int year)
+        {
+            if (!ModelState.IsValid)
+            {
+                return BadRequest(ModelState);
+            }
+
+            // Load from the DB the IndicatorGroups with its Indicators, Registries, Documents, and Links
+            _context.IndicatorGroups.Include(x => x.Indicators)
+                .ThenInclude(x => x.Registries).ToList();
+            _context.LinkRegistries.Include(x => x.Links).ToList();
+
+            var indicatorGroup = await _context.IndicatorGroups.SingleOrDefaultAsync(m => m.IndicatorGroupID == id);
+
+            // If the specified indicator group doesn't exist, show NotFound
+            if (indicatorGroup == null)
+            {
+                return NotFound();
+            }
+
+            // List of the results of every indicator of the group
+            List<double> list = new List<double>();
+
+            // Calculate every indicator of the group
+            foreach (Indicator indicator in indicatorGroup.Indicators)
+            {
+                indicator.Type = indicator.Type; // Assign the IndicatorCalculator according to the Indicator's Type
+                list.Add(indicator.IndicatorCalculator.Calculate(indicator.Registries, year));
+            }
+
+            // Return the list with the results
+            return Ok(list);
+        }
+
+        // GET: api/IndicatorGroups/Calculate/1/2018/0 (group= 1, year= 2018, month= January)
+        [Route("Calculate/{id:int}/{year:int}/{month:int}")]
+        public async Task<IActionResult> CalculateIndicators([FromRoute] int id, [FromRoute] int year, [FromRoute] int month)
+        {
+            if (!ModelState.IsValid)
+            {
+                return BadRequest(ModelState);
+            }
+
+            // Load from the DB the IndicatorGroups with its Indicators, Registries, Documents, and Links
+            _context.IndicatorGroups.Include(x => x.Indicators)
+                .ThenInclude(x => x.Registries).ToList();
+            _context.LinkRegistries.Include(x => x.Links).ToList();
+
+            var indicatorGroup = await _context.IndicatorGroups.SingleOrDefaultAsync(m => m.IndicatorGroupID == id);
+
+            // If the specified indicator group doesn't exist, show NotFound
+            if (indicatorGroup == null)
+            {
+                return NotFound();
+            }
+
+            // List of the results of every indicator of the group
+            List<double> list = new List<double>();
+
+            // Calculate every indicator of the group
+            foreach (Indicator indicator in indicatorGroup.Indicators)
+            {
+                indicator.Type = indicator.Type; // Assign the IndicatorCalculator according to the Indicator's Type
+                list.Add(indicator.IndicatorCalculator.Calculate(indicator.Registries, year, month + 1)); // The month in Angular starts in 0 and in C# starts in 1
+            }
+
+            // Return the list with the results
+            return Ok(list);
+        }
+
         private bool IndicatorGroupExists(long id)
         {
             return _context.IndicatorGroups.Any(e => e.IndicatorGroupID == id);

@@ -9,5 +9,6 @@ namespace think_agro_metrics.Models
     {
         double Calculate(ICollection<Registry> registries);
         double Calculate(ICollection<Registry> registries, int year);
+        double Calculate(ICollection<Registry> registries, int year, int month);
     }
 }

@@ -30,35 +30,36 @@ export class FileDocumentFormComponent implements OnInit {
 
   onSubmit() {
     console.log(this.model);
-    this.model.extension = "file";
-    this.RegistryService.addFileDocument(this.model, this.idRegistry);
-    //this.registry.documents.push(this.model);
+    this.model.extension = 'file';
+    this.service.addFileDocument(this.model, this.idRegistry);
     this.closeModal();
     this.router.navigateByUrl('/registry/' + this.idRegistry);
   }
 
   upload(files) {
-    if (files.length === 0)
+    if (files.length === 0) {
       return;
+    }
 
     const formData = new FormData();
 
-    for (let file of files)
+    for (const file of files) {
       formData.append(file.name, file);
+    }
 
     const uploadReq = new HttpRequest('POST', 'api/Registries/' + this.idRegistry + '/AddFileDocument', formData, {
       reportProgress: true,
     });
 
     this.http.request(uploadReq).subscribe(event => {
-      if (event.type === HttpEventType.UploadProgress)
+      if (event.type === HttpEventType.UploadProgress) {
         this.progress = Math.round(100 * event.loaded / event.total);
-      else if (event.type === HttpEventType.Response)
+      } else if (event.type === HttpEventType.Response) {
         this.message = event.body.toString();
+      }
     });
 
-    this.router.navigateByUrl("/registry/" + this.registry.registryID);
-    window.location.reload(true);
+    this.router.navigateByUrl('/registry/' + this.registry.registryID);
   }
 
   closeModal() {
@@ -71,12 +72,12 @@ export class FileDocumentFormComponent implements OnInit {
       form.controls['name'].value; // Dr. IQ
   }
 
-  constructor(private http: HttpClient, 
-              private router: Router, 
-              private RegistryService: RegistryService,
+  constructor(private http: HttpClient,
+              private router: Router,
+              private service: RegistryService,
               private modalService: BsModalService) {
     this.model = new Document();
-    this.model.name = "Nombre";
+    this.model.name = 'Nombre';
   }
 
   ngOnInit() {

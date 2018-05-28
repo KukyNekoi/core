@@ -13,6 +13,7 @@ namespace think_agro_metrics.Models
         public DateTime Date { get; set; } // Date when the registry occured
         public string Value { get; set; }
         public ICollection<Document> Documents { get; set; }
+        public string Discriminator { get; set; }
 
         public Registry() {
             this.DateAdded = DateTime.Now;

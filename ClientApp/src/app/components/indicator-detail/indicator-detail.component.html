@@ -1,76 +1,97 @@
 <div *ngIf="indicator$ | async as indicator; else loading">
-
-  <section>
+    <!--Title-->
     <div id="head-page-section" class="l-grey-bg head-page-section">
       <div class="container">
         <div class="row">
           <div class="col-md-8 col-sm-7">
             <div class="head-title">
-              <h1> {{ indicator.name }}</h1>
-              <!--h2>Tipo: {{ indicator.type }}</h2-->
-            </div>
-            <!-- end subsection-text -->
+              <h1>
+                {{ indicator.name }}
+              </h1>              
+            </div> <!-- end subsection-text -->
+          </div> <!-- end col-md-8 -->
+        </div> <!-- end row -->
+      </div> <!-- end container -->
+    </div>
+  
+    <div class="container">  
+      <!--Dropdown Filters-->
+      <div class="row">
+  
+        <!--Dropdown Year Filter-->
+        <div class="col-md-6">
+          Seleccione el año a mostrar:
+          <br>
+          <div class="btn-group" dropdown>
+            <button id="button-basic" dropdownToggle type="button" class="btn btn-primary dropdown-toggle" aria-controls="dropdown-basic">
+              {{ selectionYear }} <span class="caret"></span>
+            </button>
+            <ul id="dropdown-basic" *dropdownMenu class="dropdown-menu"
+                role="menu" aria-labelledby="button-basic">
+              <li><a class="dropdown-item" (click)="selectRegistriesYear(allYears)">Todos los años</a></li>
+              <li *ngFor="let year of years"><a class="dropdown-item" (click)="selectRegistriesYear(year)">Año {{ year }}</a></li>
+            </ul>
           </div>
-          <!-- end col-md-8 -->
         </div>
-        <!-- end row -->
       </div>
-      <!-- end container -->
-    </div>
-  </section>
-  <div class="container">
-    <div class="heading-block">
-      <h2>Detalle de Registros</h2>
-    </div>
-    <ng-container *ngIf="indicator.type == 0 || indicator.type == 1">
+  
+      <div class="heading-block" *ngIf="registriesCount != 0; else noRegistries">
+        <h2>Detalle de Registros</h2>
+      </div>
+  
       <div class="panel panel-default" *ngFor="let registry of indicator.registries">
         <!-- Default panel contents -->
-        <div class="panel-heading">{{registry.name}}</div>
+        <div class="panel-heading">
+          {{registry.name}}
+          <div class="pull-right">
+            <button href="#" class="btn btn-success btn-xs" (click)="openModalEditRegistry(editRegistry,registry)"> <span class="glyphicon glyphicon-pencil">  </span>  </button>
+            <button href="#" class="btn btn-danger btn-xs" (click)="deleteRegistry(registry)"> <span class="glyphicon glyphicon-trash"> </span> </button>
+          </div>
+        </div>
         <div class="panel-body">
-          <!-- Table -->
+          <div class="container">
+            <h6>Datos registro</h6>
+          </div>
+        <!-- Table -->
+        <table class="table">
+          <tr><td><b>Fecha ingreso de registro</b></td><td></td><td></td><td>{{registry.date | date:'dd-MM-yyyy'}}</td></tr>
+          <tr *ngIf="indicator.registriesType === 2 || indicator.registriesType === 3"><td><b>Cantidad</b></td><td></td><td></td><td>{{registry.quantity}}</td></tr>
+          <tr *ngIf="indicator.registriesType === 4"><td><b>Porcentaje</b></td><td></td><td></td><td>{{registry.percent}}%</td></tr>
+        </table>
+        <div class="container">
+            <h6>Documentos de respaldo</h6>
+          </div>
           <table class="table">
-            <tr>
-              <td>
-                <b>Fecha</b>
-              </td>
-              <td>{{registry.date | date:'dd-MM-yyyy'}}</td>
-            </tr>
-            <tr *ngIf="registry.discriminator ==='QuantityRegistry'">
-              <td>
-                <b>N°</b>
-              </td>
-              <td>
-                {{registry.quantity}}
-              </td>
-            </tr>
-            <tr>
-              <td>
-                <b>Documento respaldo</b>
-              </td>
-              <td>
-                <a (click)="gotoRegistry(registry.registryID)">Ver respaldos</a>
-              </td>
+            <tr *ngFor="let document of registry.documents">
+              <td><b>{{document.name}}</b></td>
+              <td>{{document.date | date: 'dd-MM-yyyy'}}</td>
+              <td><a href="{{ document.link }}">Descargar</a></td>
+              <td><button class="btn btn-danger btn-xs pull-right" (click)="deleteDocument(registry,document)"> <span class="glyphicon glyphicon-trash"> </span> </button></td>
             </tr>
           </table>
+          <button class="btn btn-primary dropdown-toggle" (click)="gotoRegistry(registry.registryID)">Ver respaldos</button>
+        </div>
+  
+      </div>
+    </div>
+  </div>
+  
+  <ng-template #loading>
+    <div id="head-page-section" class="l-grey-bg head-page-section">
+      <div class="container">
+        <div class="row">
+          <div class="col-md-8 col-sm-7">
+            <div class="head-title">
+              <h2>
+                Cargando...
+              </h2>
+            </div>
+          </div>
         </div>
       </div>
-    </ng-container>
-    <button type="button" class="btn btn-primary" (click)="openModal(template)">Añadir registro</button>
-    <ng-template #template>
-      <div class="modal-header">
-        <h4 class="modal-title pull-left">Ingrese un Nuevo Registro</h4>
-        <button type="button" class="close pull-right" aria-label="Close" (click)="modalRef.hide()">
-          <span aria-hidden="true">&times;</span>
-        </button>
-      </div>
-      <div class="modal-body">
-        <app-registry-form [indicator]="indicator" [idIndicator]="idIndicator" [modalRef]="modalRef"></app-registry-form>
-      </div>
-    </ng-template>
-  </div>
-</div>
-
-<br>
-<ng-template #loading>
-  Cargando...
-</ng-template>
+    </div>
+  </ng-template>
+  
+  <ng-template #noRegistries>
+    <h2>Aún no se han cargado registros.</h2>         
+  </ng-template>

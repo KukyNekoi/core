@@ -1,4 +1,5 @@
 export enum IndicatorType {
-    QuantityIndicatorCalculator = 0,
-    PercentIndicatorCalculator = 1,
+    DefaultIndicatorCalculator = 0,
+    QuantityIndicatorCalculator = 1,
+    PercentIndicatorCalculator = 2,
 }

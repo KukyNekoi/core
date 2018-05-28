@@ -2,15 +2,33 @@
   <div class="form-group">
     <label for="name" class="sr-only">Nombre del registro</label>
     <input type="text" id="name" class="form-control" placeholder="Nombre del registro" required [(ngModel)]="model.name" name="name"
-           #name="ngModel">
+      #name="ngModel">
   </div>
   <div class="form-group">
     <label class="sr-only">Fecha</label>
+    <!--<input name="fecha" id="email" class="form-control" placeholder="Fecha">-->
     <input type="date" required [(ngModel)]="model.date" name="date" #name="ngModel">
   </div>
-  <div class="form-group" *ngIf="indicator.registries[0].discriminator==='DefaultRegistry'">
+  <div class="form-group"  *ngIf="indicator.registries[0].discriminator==='DefaultRegistry'">
     <label class="sr-only">Recurso</label>
     <input name="recurso" id="recurso" class="form-control" placeholder="Recurso">
+  </div>
+
+  <div class="form-group" *ngIf="indicator.registries[0].discriminator==='QuantityRegistry'">
+    <label class="sr-only">Ingrese Numero</label>
+    <input type ="number" id="quantity" class="form-control" placeholder="cantidad de empresas asistentes"
+    required [(ngModel)]="model.quantity" name="quantity" #name="ngModel">
+  </div>
+
+  <div class="form-group" *ngIf="indicator.registries[0].discriminator==='LinkRegistry'">
+    <label class="sr-only">Ingrese Link</label>
+    <input type ="text" id="link" class="form-control" placeholder="Ingrese Link"
+    required [(ngModel)]="model.link" name="link" #name="ngModel">
+  </div>
+
+  <div class="form-group">
+    <label for="select" class="btn btn-sm btn-clean-2">Seleccionar Documento</label>
+    <input type="file" id="files" multiple name="photo" id="select" />
   </div>
   <button type="submit" class="btn btn-primary" (click)="closeModal()">Registrar</button>
 </form>
