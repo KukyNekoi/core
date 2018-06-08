@@ -1,6 +1,6 @@
 <!-- Head page section================================================== -->
 <div *ngIf="indicator$ | async as indicator else loading;">
-  {{ this.showGraph(indicator) }}
+  {{ this.showGraph() }}
   <section>
     <div id="head-page-section" class="l-grey-bg head-page-section">
       <div class="container">
@@ -157,7 +157,7 @@
             <!--Begin tab-->
             <!--Tabset removed because I didn't know what to do with him-->
             <!--Registries list and RegistriesType (from indicator) are needed-->
-            <app-indicator-detail-registry [registries]="indicator.registries" [registriesType]="indicator.registriesType"></app-indicator-detail-registry>
+            <app-indicator-detail-registry [indicator]="indicator"></app-indicator-detail-registry>
           </div>
         </div>
       </div>

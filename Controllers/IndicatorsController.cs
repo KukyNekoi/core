@@ -365,7 +365,7 @@ namespace think_agro_metrics.Controllers
             return Ok(value);
         }
 
-        // GET: api/Indicators/Calculate/5/2018/0 // Calculate Indicator with ID 5 for a selected year and selected month
+        // GET: api/Indicators/Calculate/5/2018/0 // Calculate Indicator with ID 5 for a selected year and selected month (0: January)
         [Route("Calculate/{id:long}/{year:int}/{month:int}")]
         public async Task<ActionResult> CalculateIndicatorByYearMonth([FromRoute] long id, [FromRoute] int year, [FromRoute] int month)
         {
@@ -392,6 +392,113 @@ namespace think_agro_metrics.Controllers
             var value = indicator.IndicatorCalculator.Calculate(indicator.Registries, year, month);
 
             return Ok(value);
+        }
+
+        // GET: api/Indicators/ChartData/5 // ChartData of the Indicator with ID 5 
+        [Route("ChartData/{id:long}")]
+        public async Task<ActionResult> ChartDataIndicator([FromRoute] long id)
+        {
+            if (!ModelState.IsValid)
+            {
+                return BadRequest(ModelState);
+            }
+
+            // Obtain the Indicator with its Registries
+            var indicator = await _context.Indicators
+                .Where(i => i.IndicatorID == id)
+                .Include(i => i.Registries)
+                .SingleAsync();
+
+            if (indicator == null)
+            {
+                return NotFound();
+            }
+
+            indicator.RegistriesType = indicator.RegistriesType; // Assign the IndicatorCalculator according to the Indicator's RegistriesType
+            var values = indicator.IndicatorCalculator.CalculateChartData(indicator.Registries);
+
+            return Ok(values);
+        }
+
+        // GET: api/Indicators/ChartData/5/2018 // ChartData of the Indicator with ID 5 for a selected year
+        [Route("ChartData/{id:long}/{year:int}")]
+        public async Task<ActionResult> ChartDataIndicatorByYear([FromRoute] long id, [FromRoute] int year)
+        {
+            if (!ModelState.IsValid)
+            {
+                return BadRequest(ModelState);
+            }
+
+            // Obtain the Indicator with its Registries
+            var indicator = await _context.Indicators
+                .Where(i => i.IndicatorID == id)
+                .Include(i => i.Registries)
+                .SingleAsync();
+
+            if (indicator == null)
+            {
+                return NotFound();
+            }
+
+            indicator.RegistriesType = indicator.RegistriesType; // Assign the IndicatorCalculator according to the Indicator's RegistriesType
+            var values = indicator.IndicatorCalculator.CalculateChartDataYear(indicator.Registries, year);
+
+            return Ok(values);
+        }
+
+        // GET: api/Indicators/ChartData/5/2018/0 // ChartData of the Indicator with ID 5 for a selected year and selected month (0: January)
+        [Route("ChartData/{id:long}/{year:int}/{month:int}")]
+        public async Task<ActionResult> ChartDataIndicatorByYearMonth([FromRoute] long id, [FromRoute] int year, [FromRoute] int month)
+        {
+            if (!ModelState.IsValid)
+            {
+                return BadRequest(ModelState);
+            }
+
+            // Remember add 1 to month (the month starts in 0 on Angular and in 1 on C#)
+            month = month + 1;
+
+            // Obtain the Indicator with its Registries
+            var indicator = await _context.Indicators
+                .Where(i => i.IndicatorID == id)
+                .Include(i => i.Registries)
+                .SingleAsync();
+
+            if (indicator == null)
+            {
+                return NotFound();
+            }
+
+            indicator.RegistriesType = indicator.RegistriesType; // Assign the IndicatorCalculator according to the Indicator's RegistriesType
+            var values = indicator.IndicatorCalculator.CalculateChartDataYearMonth(indicator.Registries, year, month);
+
+            return Ok(values);
+        }
+
+        // GET: api/Indicators/ChartData/Week/5/2018/1 // ChartData of the Indicator with ID 5 for a selected year and selected week
+        [Route("ChartData/{id:long}/{year:int}/{week:int}")]
+        public async Task<ActionResult> ChartDataIndicatorByYearWeek([FromRoute] long id, [FromRoute] int year, [FromRoute] int week)
+        {
+            if (!ModelState.IsValid)
+            {
+                return BadRequest(ModelState);
+            }
+
+            // Obtain the Indicator with its Registries
+            var indicator = await _context.Indicators
+                .Where(i => i.IndicatorID == id)
+                .Include(i => i.Registries)
+                .SingleAsync();
+
+            if (indicator == null)
+            {
+                return NotFound();
+            }
+
+            indicator.RegistriesType = indicator.RegistriesType; // Assign the IndicatorCalculator according to the Indicator's RegistriesType
+            var values = indicator.IndicatorCalculator.CalculateChartDataYearWeek(indicator.Registries, year, week);
+
+            return Ok(values);
         }
 
         // PUT: api/Indicators/5

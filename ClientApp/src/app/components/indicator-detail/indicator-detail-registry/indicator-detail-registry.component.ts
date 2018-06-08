@@ -9,6 +9,7 @@ import { NgbPanelChangeEvent } from '@ng-bootstrap/ng-bootstrap';
 // Ngx-Bootstrap
 import { BsModalService } from 'ngx-bootstrap/modal';
 import { BsModalRef } from 'ngx-bootstrap/modal/bs-modal-ref.service';
+import { Indicator } from '../../../shared/models/indicator';
 
 @Component({
   selector: 'app-indicator-detail-registry',
@@ -21,10 +22,8 @@ export class IndicatorDetailRegistryComponent implements OnInit {
   customClass = 'card-header';
 
   @Input()
-  public registries: Registry[];
+  public indicator: Indicator;
 
-  @Input()
-  public registriesType: number;
 
   public registry: Registry = null; // For EditRegistry
   public editModalRef: BsModalRef;
@@ -37,7 +36,7 @@ export class IndicatorDetailRegistryComponent implements OnInit {
   }
 
   private deleteDocument(registry: Registry, document: Document) {
-    const result = confirm('Está seguro que desea elimianr el documento: ' + document.name);
+    const result = confirm('Está seguro que desea eliminar el documento: ' + document.name);
     if (registry.documents.length === 1) {
       alert('Debe existir al menos un documento de respaldo para el registro');
       return;
@@ -79,8 +78,8 @@ export class IndicatorDetailRegistryComponent implements OnInit {
     if (result) {
       this.indicatorService.deleteRegistry(registry).subscribe(
         data => {
-          const index = this.registries.indexOf(registry);
-          this.registries.splice(index, 1);
+          const index = this.indicator.registries.indexOf(registry);
+          this.indicator.registries.splice(index, 1);
         },
         err => console.error(err)
       );

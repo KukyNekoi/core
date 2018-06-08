@@ -20,6 +20,7 @@ export class IndicatorService {
   public static PERCENT_REGISTRY = '/PercentRegistry';
   public static QUANTITY_REGISTRY = '/QuantityRegistry';
   public static DEFAULT_REGISTRY = '/DefaultRegistry/';
+  public static CHART_DATA = IndicatorService.INDICATORS_API + 'ChartData/';
 
   constructor(public http: HttpClient) { }
 
@@ -81,5 +82,21 @@ export class IndicatorService {
 
   calculateIndicatorsYear(year: number): Observable<number[]> {
     return this.http.get<number[]>(IndicatorService.INDICATORS_API + 'Calculate/' + year);
+  }
+
+  getChartDataIndicator(indicatorID: number): Observable<number[]> {
+    return this.http.get<number[]>(IndicatorService.CHART_DATA + indicatorID);
+  }
+
+  getChartDataIndicatorYear(indicatorID: number, year: number): Observable<number[]> {
+    return this.http.get<number[]>(IndicatorService.CHART_DATA + indicatorID + '/' + year);
+  }
+
+  getChartDataIndicatorYearMonth(indicatorID: number, year: number, month: number): Observable<number[]> {
+    return this.http.get<number[]>(IndicatorService.CHART_DATA + indicatorID + '/' + year + '/' + month);
+  }
+
+  getChartDataIndicatorYearWeek(indicatorID: number, year: number, week: number): Observable<number[]> {
+    return this.http.get<number[]>(IndicatorService.CHART_DATA + 'Week/' + indicatorID + '/' + year + '/' + week);
   }
 }

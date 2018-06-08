@@ -17,7 +17,6 @@ import { IndicatorService } from '../../services/indicator/indicator.service';
 import { RegistryService } from '../../services/registry/registry.service';
 import { IndicatorGroupService } from '../../services/indicator-group/indicator-group.service';
 import { IndicatorDisplayComponent } from '../indicator-home/indicator-display/indicator-display.component';
-import { $ } from 'protractor';
 
 // Ngx-Bootstrap
 import { BsModalService } from 'ngx-bootstrap/modal';
@@ -60,7 +59,6 @@ export class IndicatorDetailComponent implements OnInit {
 
     // lineChart
     public counter = 0;
-
     public lineChartData: Array<any> = [
       {data: [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0], label: 'Cantidad de Registros', lineTension: 0}
     ];
@@ -134,7 +132,6 @@ export class IndicatorDetailComponent implements OnInit {
     // Calculate indicator
     this.value$ = this.service.getIndicatorValueYear(this.idIndicator, this.selectedYear);
     this.goal$ = this.service.getGoalYear(this.idIndicator, this.selectedYear);
-
   }
 
   selectRegistries(year: any, month: string) {
@@ -232,48 +229,24 @@ export class IndicatorDetailComponent implements OnInit {
     this.selectedMonth = Months[month];
   }
 
-  public showGraph(indicator: Indicator) {
-    if (this.counter++ % 200 === 0) {
+  public showGraph() {
+    if (this.counter % 200 === 0) {
       const _lineChartData: Array<any> = new Array(this.lineChartData.length);
-      _lineChartData[0] = {data: new Array(this.lineChartData[0].data.length), label: this.lineChartData[0].label};
 
-      let cantidad = 0;
-      const cantidadAcumulada = 0;
-      const monthMin = 0;
-
-      /* Se ingresa 0 a todos los datos en el arreglo provisorio de los meses (_lineChartData) */
-      for (let i = 0; i < 12; i++) {
-        _lineChartData[0].data[i] = 0;
+      for (let i = 0; i < this.lineChartData.length; i++) {
+        // tslint:disable-next-line:max-line-length
+        _lineChartData[i] = {data: new Array(this.lineChartData[i].data.length), label: this.lineChartData[i].label, lineTension: this.lineChartData[i].lineTension};
+        this.indicator$.subscribe(indicator => {
+          this.service.getChartDataIndicatorYear(indicator.indicatorID, 2018)
+          .subscribe(data => {
+            _lineChartData[0].data = data;
+            this.lineChartData = _lineChartData;
+          });
+        });
       }
 
-      /* Ingreso de datos al arreglo provisorio de meses */
-      // console.log("largo" + this.indicator.registries.length);
-      for (let i = 0; i < indicator.registries.length; i++) {
-        const date: Date = new Date(indicator.registries[i].date);
-        const month = date.getMonth();
-        // console.log("entre ctm !!!!:   " + month);
-        /* if si el registro es de cantidad */
-        if (indicator.registriesType === 1) {
-          cantidad = indicator.registries[i].quantity;
-          // console.log("Cantidad : "+cantidad);
-
-          for (let j = 0; j < 12; j++) {
-            if (j >= month) {
-              _lineChartData[0].data[j] += cantidad;
-            }
-          }
-        } else { // caso contrario si el registro es default o algun otro que no sea cantidad
-          cantidad = 1;
-          for (let j = 0; j < 12; j++) {
-            if (j >= month) {
-              _lineChartData[0].data[j] += cantidad;
-            }
-          }
-        }
-      }
-
-      this.lineChartData = _lineChartData; // se ingresa los datos del arreglo provisorio al arreglo de meses original
     }
+    this.counter++;
   }
 
   // events

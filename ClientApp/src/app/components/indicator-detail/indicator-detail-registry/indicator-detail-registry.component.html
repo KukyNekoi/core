@@ -1,5 +1,5 @@
 <ngb-accordion [closeOthers]="true" activeIds="static-1">
-  <ng-template ngFor let-registry [ngForOf]="registries" let-i="index">
+  <div *ngFor="let registry of indicator.registries">
     <ngb-panel>
       <ng-template ngbPanelTitle style="padding: 1em; border-radius: 0.5em; font-size: 14px; border: 5px solid #c4c4c4 !important; font-weight: bolder;">
         <div fxLayout="row" class="clickeable">
@@ -9,8 +9,8 @@
             <span class="not-bold-but-italic">{{registry.date | date: 'dd-MM-yyyy'}}</span>
           </div>
           <div fxFlex="42%">
-            <div class="value-box" *ngIf="registry.discriminator === 'QuantityRegistry'">{{registry.quantity}}</div>
-            <div class="value-box" *ngIf="registry.discriminator === 'PercentRegistry' ">{{registry.percent}}%</div>
+            <div class="value-box" *ngIf="indicator.registriesType === 1">{{registry.quantity}}</div>
+            <div class="value-box" *ngIf="indicator.registriesType === 2">{{registry.percent}}%</div>
           </div>          
           <div fxFlex="15%">
             <button class="btn btn-xs btn-primary btn-size-text" (click)="openModalEditRegistry($event, editRegistry,registry)">Modificar</button>
@@ -22,7 +22,7 @@
         </div>
       </ng-template>
       <ng-template ngbPanelContent>
-        <ng-template ngFor let-document [ngForOf]="registry.documents" let-i="index">
+        <div *ngFor="let document of registry.documents">
           <div fxLayout="row">
             <div fxFlex="40%">
               <b>Nombre</b>
@@ -46,15 +46,15 @@
               <a class="btn btn-xs btn-danger btn-size-text" (click)="deleteDocument(registry,document)">Eliminar</a>
             </div>
           </div>
-        </ng-template>
+        </div>
       </ng-template>
     </ngb-panel>
-  </ng-template>
+  </div>
 </ngb-accordion>
 
 
 
 <!--Modal Edit Registry-->
 <ng-template #editRegistry>
-  <app-registry-editor [registry]="registry" [registriesType]="registriesType" [editModalRef]="editModalRef" #editRegistry></app-registry-editor>
+  <app-registry-editor [registry]="registry" [registriesType]="indicator.registriesType" [editModalRef]="editModalRef" #editRegistry></app-registry-editor>
 </ng-template>
