@@ -24,6 +24,15 @@ namespace think_agro_metrics.Controllers
     [Route("api/auth")]
     public class AuthorizationController : Controller
     {
+        private IConfiguration _config;
+
+        
+        public AuthorizationController(IConfiguration config)
+        {
+            _config = config;
+        }
+
+
         public class Credentials
         {
             public String email;
@@ -91,18 +100,25 @@ namespace think_agro_metrics.Controllers
             public Boolean Eliminado ; // : false
         }
                 
-        //        private string BuildToken(UserModel user)
-        //        {
-        //            var key = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(_config["Jwt:Key"]));
-        //            var creds = new SigningCredentials(key, SecurityAlgorithms.HmacSha256);
-        //
-        //            var token = new JwtSecurityToken(_config["Jwt:Issuer"],
-        //                _config["Jwt:Issuer"],
-        //                expires: DateTime.Now.AddMinutes(30),
-        //                signingCredentials: creds);
-        //
-        //            return new JwtSecurityTokenHandler().WriteToken(token);
-        //        }
+        private string BuildToken(AuthenticatedUser user, UserDetails userDetails, UserRole[] userRoles)
+        {
+            List<Claim> claims = new List<Claim>();
+            claims.Add(new Claim(ClaimTypes.Email, userDetails.Resultado.Email));
+            foreach (var userRole in userRoles)
+            {
+                claims.Add(new Claim(ClaimTypes.Role, userRole.Resultado.Nombre));
+            }   
+            var key = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(_config["Jwt:Key"]));
+            var creds = new SigningCredentials(key, SecurityAlgorithms.HmacSha256);
+
+            var token = new JwtSecurityToken(_config["Jwt:Issuer"],
+                _config["Jwt:Issuer"],
+                claims: claims.ToArray(),
+                expires: DateTime.Now.AddMinutes(30),
+                signingCredentials: creds);
+
+            return new JwtSecurityTokenHandler().WriteToken(token);
+        }
 
         public HttpClient _client = new HttpClient();
         private String ROLE_BY_ID_QUERY_URL = "http://proyectos.thinkagro.cl/API/api/Query/RolPorId";
@@ -209,6 +225,7 @@ namespace think_agro_metrics.Controllers
             return roles.ToArray();
         }        
 
+        [AllowAnonymous]
         [HttpPost("")]
         public async Task<IActionResult> LogIn([FromBody] Credentials credentials)
         {
@@ -231,8 +248,14 @@ namespace think_agro_metrics.Controllers
             {
                 return Unauthorized();
             }
-            
-            return Ok(userRoles);
+
+            String token = this.BuildToken(user, userDetails, userRoles);
+
+            if (token == null)
+            {
+                return Unauthorized();
+            }
+            return Ok(new { token = token });
         }
     }
 }

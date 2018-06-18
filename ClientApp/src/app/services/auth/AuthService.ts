@@ -34,6 +34,8 @@ export class AuthService {
       return this.http.post<any>(AuthService.AUTHORIZATION_API, credentials).subscribe(
         (data: any) => {
           // success path
+          let token: string = data.token;
+          localStorage.setItem('token', token);
           observer.next(true);
           localStorage.setItem('user', JSON.stringify(credentials));
           observer.complete();
@@ -42,6 +44,8 @@ export class AuthService {
         },
         error => {
           // error path
+          localStorage.setItem('token', null);
+          localStorage.setItem('user', null);
           this.router.navigate(['/welcome']);
           observer.error(new Error('usuario inválido'));
           observer.complete();
@@ -64,6 +68,14 @@ export class AuthService {
       return false;
     }
     return JSON.parse(localStorage.getItem('user'));
+  }
+  
+  public getToken() : String | boolean {
+    let token: string = JSON.parse(localStorage.getItem('token'));
+    if (token == null) {
+      return false;
+    }
+    return token;
   }
 
   private parseJwt(token) {

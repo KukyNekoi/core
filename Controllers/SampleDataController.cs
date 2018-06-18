@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace think_agro_metrics.Controllers
@@ -15,6 +16,7 @@ namespace think_agro_metrics.Controllers
         };
 
         [HttpGet("[action]")]
+        [Authorize(Roles = "Administrador")]
         public IEnumerable<WeatherForecast> WeatherForecasts()
         {
             var rng = new Random();

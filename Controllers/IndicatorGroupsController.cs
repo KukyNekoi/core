@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
@@ -24,6 +25,7 @@ namespace think_agro_metrics.Controllers
 
         // GET: api/IndicatorGroups
         [HttpGet]
+        [Authorize(Roles = "Administrador")]
         public async Task<IActionResult> GetIndicatorGroups()
         {
             var indicatorGroups = await _context.IndicatorGroups
@@ -36,6 +38,7 @@ namespace think_agro_metrics.Controllers
 
         // GET: api/IndicatorGroups/5
         [HttpGet("{id}")]
+        [Authorize(Roles = "Administrador")]
         public async Task<IActionResult> GetIndicatorGroup([FromRoute] long id)
         {
             if (!ModelState.IsValid)
@@ -59,6 +62,7 @@ namespace think_agro_metrics.Controllers
 
         // GET: api/IndicatorsGroups/Name/5
         [HttpGet("Name/{id}")]
+        [Authorize(Roles = "Administrador")]
         public async Task<IActionResult> GetIndicatorGroupName([FromRoute] long id)
         {
             if (!ModelState.IsValid)
@@ -78,6 +82,7 @@ namespace think_agro_metrics.Controllers
 
         // PUT: api/IndicatorGroups/5
         [HttpPut("{id}")]
+        [Authorize(Roles = "Administrador")]
         public async Task<IActionResult> PutIndicatorGroup([FromRoute] long id, [FromBody] IndicatorGroup indicatorGroup)
         {
             if (!ModelState.IsValid)
@@ -113,6 +118,7 @@ namespace think_agro_metrics.Controllers
 
         // POST: api/IndicatorGroups
         [HttpPost]
+        [Authorize(Roles = "Administrador")]
         public async Task<IActionResult> PostIndicatorGroup([FromBody] IndicatorGroup indicatorGroup)
         {
             if (!ModelState.IsValid)
@@ -128,6 +134,7 @@ namespace think_agro_metrics.Controllers
 
         // DELETE: api/IndicatorGroups/5
         [HttpDelete("{id}")]
+        [Authorize(Roles = "Administrador")]
         public async Task<IActionResult> DeleteIndicatorGroup([FromRoute] long id)
         {
             if (!ModelState.IsValid)

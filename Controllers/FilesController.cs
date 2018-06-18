@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
@@ -28,6 +29,7 @@ namespace ThinkAgroMetrics.Controllers
 
         // GET: api/Files/ASDKFJ"#L$"L#$J!#"#$JLSDG
         [HttpGet("{link}")]
+        [Authorize(Roles = "Administrador")]
         public IActionResult Download([FromRoute] string link) 
         {
             string folderName = "Repository";
@@ -50,6 +52,7 @@ namespace ThinkAgroMetrics.Controllers
 
         // PUT: api/Files/5
         [HttpPut("{id}")]
+        [Authorize(Roles = "Administrador")]
         public async Task<IActionResult> PutDocument([FromRoute] long id, [FromBody] Document document)
         {
             if (!ModelState.IsValid)

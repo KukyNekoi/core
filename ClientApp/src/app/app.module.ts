@@ -1,7 +1,7 @@
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
 import { FormsModule } from '@angular/forms';
-import { HttpClientModule } from '@angular/common/http';
+import {HTTP_INTERCEPTORS, HttpClientModule} from '@angular/common/http';
 import { RouterModule } from '@angular/router';
 
 import { AppComponent } from './app.component';
@@ -36,6 +36,7 @@ import { DocumentEditorComponent } from './components/indicator-detail/document-
 import { StorageServiceModule } from 'ngx-webstorage-service';
 import { SessionService } from './services/session/session.service';
 import { NavigationButtonsComponent } from './components/navigation-buttons/navigation-buttons.component';
+import {TokenInterceptor} from "./interceptors/TokenInterceptor";
 
 @NgModule({
   declarations: [
@@ -80,7 +81,12 @@ import { NavigationButtonsComponent } from './components/navigation-buttons/navi
       { path: '**',          component: ResultHomeComponent, canActivate: [CanActivateUser] },
     ])
   ],
-  providers: [IndicatorService, IndicatorGroupService, RegistryService, AuthService, CanActivateUser, SessionService, FileService],
+  providers: [IndicatorService, IndicatorGroupService, RegistryService, AuthService, CanActivateUser, SessionService, FileService,
+    {
+      provide: HTTP_INTERCEPTORS,
+      useClass: TokenInterceptor,
+      multi: true
+    }],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
