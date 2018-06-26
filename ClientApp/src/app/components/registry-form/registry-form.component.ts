@@ -22,7 +22,7 @@ import swal from 'sweetalert2';
 })
 export class RegistryFormComponent implements OnInit {
 
-  model: Registry;
+  model: Registry = null;
   router: Router;
   @Input() modalRef: BsModalRef;
   @Input() idIndicator;
@@ -73,5 +73,32 @@ export class RegistryFormComponent implements OnInit {
       allowOutsideClick: false,
       allowEscapeKey: false
     });
+  }
+
+  openModalFileDocument($event: any, template: TemplateRef<any>, selectedRegistry: Registry) {
+    if ($event) {
+      $event.stopPropagation();
+      $event.preventDefault();
+    }
+    this.model = selectedRegistry;
+    this.modalRef = this.modalService.show(template);
+  }
+
+  openModalLinkDocument($event: any, template: TemplateRef<any>, selectedRegistry: Registry) {
+    if ($event) {
+      $event.stopPropagation();
+      $event.preventDefault();
+    }
+    this.model= selectedRegistry;
+    this.modalRef = this.modalService.show(template);
+  }
+
+  openModalTypeDocument($event: any, template: TemplateRef<any>, selectedRegistry: Registry) {
+    if ($event) {
+      $event.stopPropagation();
+      $event.preventDefault();
+    }
+    this.model = selectedRegistry;
+    this.modalRef = this.modalService.show(template);
   }
 }

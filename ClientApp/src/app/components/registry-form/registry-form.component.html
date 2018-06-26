@@ -35,10 +35,20 @@
     <div class="col-sm-12 col-md-12">
       <h4 class="head-project-title">
         Documentación de respaldo
-        <a class="btn btn-xs btn-primary pull-right disabled"><i class="glyphicon glyphicon-plus"></i>Nuevo</a>
-        <!-- 
-          <a class="btn btn-xs btn-primary pull-right" (click)="newIsCollapsed = !newIsCollapsed"><i class="glyphicon glyphicon-plus"></i>Nuevo</a>
-        -->
+
+         <!--   
+             <div class="row">
+            <form class="col-xs-12 col-sm-12 col-md-12">
+              <label class="col-xs-6" style="text-align: center;">
+                <input type="radio" id="radioDoc" name="radioDoc" value="link">Link
+              </label>
+              <label class="col-xs-6" style="text-align: center;">
+                <input type="radio" id="radioDoc" name="radioDoc" value="archivo">Archivo
+              </label>
+            </form>
+          </div>-->
+
+        <button type="submit" class="btn btn-xs btn-primary pull-right" (click)="openModalTypeDocument($event, typeModal, registry)"><i class="glyphicon glyphicon-plus"></i>Nuevo</button>
       </h4>
     </div>
   </div>
@@ -72,3 +82,44 @@
     <button type="submit" class="btn btn-sm btn-primary" (click)="closeModal()">Aceptar</button>
   </div>
 </form>
+
+<ng-template #fileModal>
+  <div class="modal-header">
+    <h4 class="modal-title pull-left">Ingrese un documento de respaldo</h4>
+    <button type="button" class="close pull-right" aria-label="Close" (click)="modalRef.hide()">
+      <span aria-hidden="true">&times;</span>
+    </button>
+  </div>
+  <div class="modal-body">
+    <app-file-document-form [registry]="registry" [idRegistry]="registry.registryID" [modalRef]="modalRef"></app-file-document-form>
+  </div>
+</ng-template>
+
+<ng-template #linkModal>
+  <div class="modal-header">
+    <h4 class="modal-title pull-left">Ingrese un link externo</h4>
+    <button type="button" class="close pull-right" aria-label="Close" (click)="modalRef.hide()">
+      <span aria-hidden="true">&times;</span>
+    </button>
+  </div>
+  <div class="modal-body">
+    <app-link-document-form [registry]="registry" [idRegistry]="registry.registryID" [modalRef]="modalRef"></app-link-document-form>
+  </div>
+</ng-template>
+
+<ng-template #typeModal>
+  <div class="modal-header">
+    <h4 class="modal-title pull-left">Seleccione el tipo de documento</h4>
+    <button type="button" class="close pull-right" aria-label="Close" (click)="modalRef.hide()">
+      <span aria-hidden="true">&times;</span>
+    </button>
+  </div>
+  <div class="modal-body">
+    <div class="row">
+      <button class="btn btn-xs btn-primary btn-size-text text-center" (click)="openModalLinkDocument($event, linkModal, registry)">Agregar link</button>
+      <span class="pull-right">&nbsp;</span>
+      <button class="btn btn-xs btn-primary btn-size-text text-center" (click)="openModalFileDocument($event, fileModal, registry)">Agregar archivo</button>
+      </div>
+    </div>
+
+</ng-template>
