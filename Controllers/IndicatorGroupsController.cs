@@ -120,6 +120,17 @@ namespace think_agro_metrics.Controllers
                 return BadRequest(ModelState);
             }
 
+            List<IndicatorGroup> indicatorGroups = _context.IndicatorGroups.ToList(); ;
+
+            foreach(IndicatorGroup ig in indicatorGroups)
+            {
+                if (ig.Name.ToUpper().Trim().Equals(indicatorGroup.Name))
+                {
+                    return Json(false);
+                }
+            }
+
+
             _context.IndicatorGroups.Add(indicatorGroup);
             await _context.SaveChangesAsync();
 

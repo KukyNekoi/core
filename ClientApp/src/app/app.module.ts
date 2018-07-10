@@ -89,7 +89,7 @@ import { IndicatorGroupFormComponent } from './components/result-home/indicator-
       { path: 'home',        component: ResultHomeComponent, canActivate:[CanActivateUser] },
       { path: '',            component: WelcomeComponent },
       { path: '**',          component: ResultHomeComponent, canActivate: [CanActivateUser] },
-    ])
+    ], { onSameUrlNavigation: 'reload' })
   ],
   providers: [IndicatorService, IndicatorGroupService, RegistryService, AuthService, CanActivateUser, SessionService, FileService],
   bootstrap: [AppComponent]

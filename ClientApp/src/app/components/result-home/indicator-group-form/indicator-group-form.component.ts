@@ -1,4 +1,5 @@
-import { Component, OnInit, Input } from '@angular/core';
+import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
+import { Router } from '@angular/router';
 
 // Ngx-Bootstrap
 import { BsModalService } from 'ngx-bootstrap/modal';
@@ -10,6 +11,7 @@ import { IndicatorGroup } from '../../../shared/models/indicatorGroup';
 // Services
 import { IndicatorGroupService } from '../../../services/indicator-group/indicator-group.service';
 
+
 @Component({
   selector: 'app-indicator-group-form',
   templateUrl: './indicator-group-form.component.html',
@@ -17,14 +19,14 @@ import { IndicatorGroupService } from '../../../services/indicator-group/indicat
 })
 export class IndicatorGroupFormComponent implements OnInit {
 
-  //modalRef: BsModalRef;
+  // modalRef: BsModalRef;
   @Input() modalRef: BsModalRef;
 
-  @Input() indicatorGroups;
+  @Output() updateEvent = new EventEmitter<any>();
 
   public model: IndicatorGroup = new IndicatorGroup();
 
-  constructor(private modalService: BsModalService, private service: IndicatorGroupService) { }
+  constructor(private modalService: BsModalService, private service: IndicatorGroupService, private router: Router) { }
 
   ngOnInit() {
   }
@@ -33,7 +35,16 @@ export class IndicatorGroupFormComponent implements OnInit {
     this.modalRef.hide();
   }
 
-  onSubmit() {
-    console.log(this.model);
+  submit() {
+    this.service.addIndicatorGroup(this.model).subscribe((data) => {
+      this.model = data; // Update IndicatorGroupID...
+      console.log('emit');
+      // this.router.onSameUrlNavigation = "reload";
+      // this.router.navigateByUrl("/home");
+      // this.indicatorGroups$ = this.service.getIndicatorGroups();
+      // console.log(this.model);
+      this.hideModal();
+    });
+    this.updateEvent.emit('');
   }
 }

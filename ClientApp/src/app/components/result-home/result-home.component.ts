@@ -49,4 +49,7 @@ export class ResultHomeComponent implements OnInit {
     this.modalRef = this.modalService.show(template);
   }
 
+  addIndicatorGroup(event: any) {
+    console.log(event);
+  }
 }

@@ -1,19 +1,29 @@
-<form (ngSubmit)="onSubmit()" #indicatorGroupForm="ngForm">
+<div class="modal-dialog">
+  <div class="modal-header">
+    <h4 class="modal-title pull-left">Ingrese un nuevo grupo de indicadores</h4>>
+    <button type="button" class="close pull-right" aria-label="Close" (click)="modalRef.hide()">
+      <span aria-hidden="true">&times;</span>
+    </button>
+  </div>
   <div class="modal-body">
-    <div class="row">
-      <div class="form-group col-xs-12 col-sm-12 col-md-12">
-        <label>Nombre</label>
-        <input type="text" placeholder="Nombre" class="form-control" id="name" required [(ngModel)]="model.name" name="name" #name="ngModel" />
-        <div [hidden]="name.valid || name.pristine"
-             class="alert alert-danger">
-          Nombre no puede estar vacio
+    <form #indicatorGroupForm="ngForm">
+      <div class="modal-body">
+        <div class="row">
+          <div class="form-group col-xs-12 col-sm-12 col-md-12">
+            <label>Nombre</label>
+            <input type="text" placeholder="Nombre" class="form-control" id="name" required [(ngModel)]="model.name" name="name" #name="ngModel" />
+            <div [hidden]="name.valid || name.pristine"
+                 class="alert alert-danger">
+              Nombre no puede estar vacio
+            </div>
+          </div>
         </div>
       </div>
-    </div>
+      <div class="modal-footer">
+        <!--modal-footer needed, in other case, the button will be outside the modal-->
+        <button class="btn btn-sm btn-clean-2" (click)="hideModal()">Cancelar</button>
+        <button class="btn btn-sm btn-primary" [disabled]="!indicatorGroupForm.form.valid" (click)="submit()">Aceptar</button>
+      </div>
+    </form>
   </div>
-  <div class="modal-footer">
-    <!--modal-footer needed, in other case, the button will be outside the modal-->
-    <button type="button" class="btn btn-sm btn-clean-2" (click)="hideModal()">Cancelar</button>
-    <button type="submit" class="btn btn-sm btn-primary" [disabled]="!indicatorGroupForm.form.valid">Aceptar</button>
-  </div>
-</form>
+</div>
