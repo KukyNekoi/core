@@ -1,0 +1,25 @@
+.head-page-section {
+  margin-top: 80px !important;
+}
+
+.row-h1 {
+  color: #47b475;
+  font-size: 32px;
+  text-align: center;
+}
+
+.shortcode {
+  background-color: #fcfcfc !important;
+  text-align: center;
+  border-radius: 0;
+}
+
+.textfilter {
+  text-align: left !important;
+}
+
+.buttonlink {
+  background-color: transparent !important;
+  color: #47b475;
+  border: none;
+}

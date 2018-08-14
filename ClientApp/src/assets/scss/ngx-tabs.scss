@@ -1,0 +1,310 @@
+/***********************************************************************************************/
+/* =Tabs*/
+/***********************************************************************************************/
+
+.nav-tabs {
+  margin-bottom: 0px;
+  padding-left: 0px;
+  border-bottom-width: 0px;
+  list-style: none;
+}
+
+.nav-tabs::after,
+.nav-tabs::before {
+  content: ' ';
+  display: table;
+}
+
+.nav-tabs::after {
+  clear: both;
+}
+
+.nav-tabs li {
+  position: relative;
+  display: block;
+  float: left;
+  margin: 0px 0px -1px;
+}
+
+.nav-tabs li a {
+  position: relative;
+  border: 1px solid transparent;
+  margin-right: -1px;
+  padding: 9px 20px 11px;
+  display: block;
+  font-size: 13px;
+  font-style: normal;
+  font-weight: 600;
+  letter-spacing: 1px;
+  text-decoration: none;
+  text-transform: uppercase;
+}
+
+.nav-tabs li a i:first-child {
+  margin-right: 8px;
+}
+
+.nav-tabs li a i.tab-single-icon {
+  margin: 0px;
+}
+
+.nav-tabs li a img {
+  max-width: none;
+}
+
+.nav-tabs li a,
+.nav-tabs li a:focus,
+.nav-tabs li a:hover {
+  text-decoration: none;
+  outline: 0px;
+}
+
+.nav-tabs .active a {
+    z-index: 3;
+}
+
+.nav-tabs .active a::after {
+  content: '';
+  display: block;
+  position: absolute;
+  top: -1px;
+  left: -1px;
+  right: -1px;
+  z-index: 1;
+  height: 3px;
+  transition: all 0.4s ease-in-out 0s;
+  -webkit-transition: all 0.4s ease-in-out 0s;
+}
+
+.nav-tabs .active a:focus {
+  cursor: default;
+}
+
+.tab-content {
+  position: relative;
+  z-index: 2;
+  padding: 30px;
+  margin-bottom: 20px;
+  border-right-color: transparent;
+  border-right-style: solid;
+  border-right-width: 1px;
+  border-bottom-color: transparent;
+  border-bottom-style: solid;
+  border-bottom-width: 1px;
+  border-left-color: transparent;
+  border-left-style: solid;
+  border-left-width: 1px;
+  border-image-source: initial;
+  border-image-slice: initial;
+  border-image-width: initial;
+  border-image-outset: initial;
+  border-image-repeat: initial;
+
+  overflow: hidden;
+}
+
+.tab-content > .tab-pane {
+  display: none;
+}
+
+.tab-content > .active {
+  display: block;
+}
+
+.tabs-vertical {
+  overflow: hidden;
+}
+
+.tabs-vertical .nav-tabs {
+  float: left;
+  width: 240px;
+  margin-top: 0px;
+}
+
+.tabs-vertical .nav-tabs li {
+  float: none;
+}
+
+.tabs-vertical .nav-tabs li a {
+  padding: 12px 20px;
+  margin: 0px;
+  border: 1px solid rgb(221, 221, 221);
+}
+
+.tabs-vertical .nav-tabs .active a,
+.tabs-vertical .nav-tabs .active a:focus,
+.tabs-vertical .nav-tabs .active a:hover {
+  border-right-width: 1px;
+}
+
+.tabs-vertical .nav-tabs .active a::after {
+  top: -1px;
+  left: -1px;
+  right: auto;
+  bottom: -1px;
+  width: 3px;
+  height: auto;
+}
+
+.tabs-vertical .tab-content {
+  left: -1px;
+  margin: 0px 0px 40px 239px;
+}
+
+.nav-tabs li a {
+  color: rgb(112, 118, 122);
+  border-color: rgb(229, 232, 232);
+  background: rgb(243, 246, 246);
+}
+
+.nav-tabs li a:hover {
+  color: rgb(28, 32, 42);
+  background: rgb(248, 250, 250);
+}
+
+.nav-tabs .active a,
+.nav-tabs .active a:focus,
+.nav-tabs .active a:hover {
+  border-color: rgb(229, 232, 232) rgb(229, 232, 232) rgb(248, 249, 251);
+  color: rgb(28, 32, 42);
+  box-shadow: none;
+  background: rgb(248, 249, 251);
+}
+
+.nav-tabs-transparent .active a,
+.nav-tabs-transparent .active a:focus,
+.nav-tabs-transparent .active a:hover {
+  background: 0px 0px;
+}
+
+.tabs-vertical .nav-tabs .active a,
+.tabs-vertical .nav-tabs .active a:focus,
+.tabs-vertical .nav-tabs .active a:hover {
+  border-right-color: rgb(248, 249, 251);
+  border-bottom-color: rgb(229, 232, 232);
+}
+
+.nav-tabs li a {
+  color: rgb(68, 68, 68);
+  border-color: rgb(221, 221, 221);
+  background: rgb(248, 250, 250);
+}
+
+.nav-tabs li a:hover {
+  color: rgb(46, 52, 60);
+  background: rgb(255, 255, 255);
+}
+
+.nav-tabs .active a,
+.nav-tabs .active a:focus,
+.nav-tabs .active a:hover {
+  background: #ffffff;
+  border-color: #dddddd #dddddd rgba(0, 0, 0, 0);
+  box-shadow: none;
+  color: #2e343c;
+}
+
+.nav-tabs-transparent .active a,
+.nav-tabs-transparent .active a:focus,
+.nav-tabs-transparent .active a:hover {
+  background: 0px 0px;
+}
+
+.tabs-vertical .nav-tabs .active a,
+.tabs-vertical .nav-tabs .active a:focus,
+.tabs-vertical .nav-tabs .active a:hover {
+  border-right-color: rgb(255, 255, 255);
+  border-bottom-color: rgb(221, 221, 221);
+}
+
+.tab-content {
+  border-color: rgb(221, 221, 221);
+  background: rgb(255, 255, 255);
+}
+
+.tab-content h4 {
+  padding-bottom: 0;
+  margin-top: 0;
+  font-weight: 600;
+  letter-spacing: .3px;
+}
+
+.tabs-vertical.tabs-right .nav-tabs {
+  float: right;
+}
+
+.tabs-vertical.tabs-right .nav-tabs li {
+    float: none;
+}
+
+.tabs-vertical.tabs-right .tab-content {
+  margin: 0px 239px 40px 0px;
+  right: 0px;
+  left: 0px;
+}
+
+.tabs-vertical.tabs-right .nav-tabs .active a,
+.tabs-vertical.tabs-right .nav-tabs .active a:focus,
+.tabs-vertical.tabs-right .nav-tabs .active a:hover {
+  border-color: rgb(221, 221, 221) rgb(221, 221, 221) rgb(221, 221, 221) rgb(255, 255, 255);
+  border-left-width: 1px;
+  border-left-style: solid;
+  margin-left: -1px !important;
+}
+
+.tabs-vertical.tabs-right .nav-tabs .active a::after {
+  left: auto;
+  right: -1px;
+}
+
+.tabs-vertical.tabs-right .nav-tabs li a {
+  margin-left: -1px;
+  margin-right: auto;
+}
+
+.border .nav-tabs .active a::after {
+  background: #47b475;
+}
+
+.tab-nav-radius .nav-tabs li a {
+  border-radius: 8px 8px 0px 0px;
+}
+
+.tab-nav-radius .nav-tabs .active a {
+  border-bottom-left-radius: 0px;
+  border-bottom-right-radius: 0px;
+}
+
+.tab-nav-radius .tab-content {
+  border-radius: 0px 8px 8px;
+}
+
+.simple .nav-tabs li a {
+  background-color: transparent;
+  border-width: 0 0 2px;
+  margin-bottom: -1px;
+}
+.simple .nav-tabs .active a,
+.simple .nav-tabs .active a:focus,
+.simple .nav-tabs .active a:hover {
+  border-color: #47b475;
+  color: #2e343c;
+}
+.simple .tab-content {
+  border-width: 2px 0 0;
+  padding: 20px 0px;
+}
+
+.tabs-color .nav-tabs .active a {
+  color: #fff;
+  background: #47b475;
+}
+
+.tabs-right .nav-tabs li {
+  float: right;
+}
+
+.nav-link{
+  padding: 0px !important;
+  margin-right: 0px !important;
+}

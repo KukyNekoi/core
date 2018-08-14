@@ -1,51 +1,29 @@
-<div *ngIf="indicatorResults$ | async as indicatorResults; else loading">
-  <section>
-    <div class="container">
-      <div class="heading-block">
-        <h2>{{ indicatorGroup.name }}</h2>
-      </div>
-
-      <!--Dropdown Year Filter-->
-      Seleccione los años a calcular:
-      <div ngbDropdown class="d-inline-block dropdown">
-        <button class="btn btn-primary" id="dropdownBasic1" ngbDropdownToggle>{{ selection }} <i class="fa fa-caret-down"></i> </button>             
-        <ul class="dropdown-menu" ngbDropdownMenu aria-labelledby="dropdownBasic1">          
-          <li><a class="dropdown-item" (click)="calcularIndicadores('Todos los años')">Todos los años</a></li>          
-          <li *ngFor="let year of years"><a class="dropdown-item" (click)="calcularIndicadores(year)">Año {{ year }}</a></li>          
-        </ul>
-      </div>
-      <br>
-
-      <!-- end col-md-12 -->
-    </div>
-    <!-- end container -->
-  </section>
+<div *ngIf="indicatorResultsObservable | async as indicatorResults; else loading">
   <!-- end page-section -->
   <section>
     <div id="statistic-section" class="statistic-bg" data-stellar-background-ratio="0">
       <div class="container">
         <div class="row">
-  
-          <ng-template ngFor let-indicator [ngForOf]="indicatorGroup.indicators" let-i="index" [ngForTrackBy]="trackByFn">
-            <!--separador-->
-            <div *ngIf="(i%3===0) && (i>0)" class="col-md-12" style="border: 15px solid transparent;"></div>
-            <!-- end col-xs-6 col-sm-3 col-md-3 -->
-            <div class="col-xs-6 col-sm-3 col-md-4">
-              <a class="active" href="/indicator/{{ indicator.indicatorID }}">
-                <div class="services-content">
-                  <div class="statistic-percent" [attr.data-perc]="'indicatorResults[indicator.indicatorID-1]'">
-                    <div class="fact">
 
-                      <div *ngIf="indicator.type == 2; else noPercent">
-                        <span class="percentfactor">{{ indicatorResults[indicator.indicatorID-1] | number:'.0-2'}}%</span>
+          <ng-template ngFor let-indicator [ngForOf]="indicatorGroup.indicators" let-i="index" [ngForTrackBy]="trackByFn">
+            
+            <div *ngIf="isAllowedToRead(indicator.indicatorID)" class="indicator-block col-xs-12 col-sm-6 col-md-4"> 
+              <a class="active" (click)="gotoIndicator(indicatorGroup.indicatorGroupID, indicator.indicatorID)">
+                <div class="services-content">
+                    <div class="fact statistic-percent" [attr.data-perc]="indicatorResults[i]">
+                    
+                      <div class="row" *ngIf="goalsObservable | async as goals">
+                        <div class="col-md-6 col-sm-6 col-xs-6">
+                          <p>Actual</p>
+                          <span class="percentfactor">{{ indicatorResults[i] | number:'.0-2' }}<strong *ngIf="indicator.registriesType == 2;">%</strong></span>
+                        </div>
+                        <div class="col-md-6 col-sm-6 col-xs-6">
+                          <p>Meta</p>
+                          <span class="percentfactor">{{ goals[i] | number:'.0-2' }}<strong *ngIf="indicator.registriesType == 2;">%</strong></span>
+                        </div>
                       </div>
-                      <ng-template #noPercent>
-                         <span class="percentfactor">{{ indicatorResults[indicator.indicatorID-1] | number:'.0-2'}}</span>
-                      </ng-template>
-                      
-                      <p>{{ indicator.name }}</p>
-                    </div>
-                    <!-- end fact -->
+                      <p class="text-ellipsis" title="{{ indicator.name }}">{{ indicator.name }}</p>
+    
                   </div>
                   <!-- end statistic-percent -->
                 </div>
@@ -60,9 +38,11 @@
     </div>
     <!-- end statistic-section -->
   </section>
-    <!-- End statistic section -->
+  <!-- End statistic section -->
 </div>
 
+
 <ng-template #loading>
-    Cargando...
+  Cargando...
 </ng-template>
+  

@@ -1,47 +1,37 @@
 import { Component, OnInit, Input, Inject } from '@angular/core';
 import { Observable } from 'rxjs/Observable';
 import { DecimalPipe } from '@angular/common';
+import { Router } from '@angular/router';
 
-// Models
-import { Indicator } from '../../../shared/models/indicator';
+// Model
+import { IndicatorGroup } from '../../../shared/models/indicatorGroup';
+import {Role} from '../../../shared/models/role';
+import {RolesType} from '../../../shared/models/rolesType';
 
 // Service
-import { IndicatorService } from '../../../services/indicator/indicator.service';
+import { AuthService } from '../../../services/auth/AuthService';
+import { PermissionClaim } from '../../../services/auth/permissions';
 
 @Component({
   selector: 'app-indicator-display',
   templateUrl: './indicator-display.component.html',
   styleUrls: ['./indicator-display.component.css']
 })
-export class IndicatorDisplayComponent implements OnInit {
-  @Input() indicatorGroup;
-  indicatorResults$: Observable<number[]>;
-  selection = 'Todos los años';
-  years: number[] = []; // List of the years from baseYear to currentYear (defined in ngOnInit)
 
-  constructor(private service: IndicatorService) {
+export class IndicatorDisplayComponent {
+  @Input() indicatorResultsObservable: Observable<number[]>;
+  @Input() goalsObservable: Observable<number[]>;
+  @Input() indicatorGroup: IndicatorGroup;
+
+  constructor(private router: Router, private authService: AuthService) {
   }
 
-  ngOnInit() {
-    this.indicatorResults$ = this.service.calculateIndicators();
-
-    // Create the list of years from baseYear to currentYear
-    const baseYear = 2018;
-    const currentYear = new Date().getFullYear();
-    for (let i = 0; i <= (currentYear - baseYear); i++) {
-        this.years[i] = baseYear + i;
-    }
+  gotoIndicator(idIndicatorGroup: number, idIndicator: number) {
+    this.router.navigateByUrl('/indicator/' + idIndicatorGroup + '/' + idIndicator);
   }
 
-  calcularIndicadores(value: any) {
-    if (value === 'Todos los años') {
-      this.indicatorResults$ = this.service.calculateIndicators();
-      this.selection = value;
-    } else {
-      this.indicatorResults$ = this.service.calculateIndicatorsYear(value);
-      this.selection = 'Año ' + value;
-    }
-
+  isAllowedToRead(indicatorId: number): boolean {
+    return this.authService.isAllowedTo(indicatorId, PermissionClaim.READ);
   }
 
 }

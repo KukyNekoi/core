@@ -1,91 +1,232 @@
-<br>
-<br>
-<br>
-<br>
-<br>
+<!-- Head page section================================================== -->
+<div *ngIf="indicator$ | async as indicator else loading;">
+
+  <section>
+    <div id="head-page-section" class="l-grey-bg head-page-section">
+      <div class="container">
+        <app-navigation-buttons></app-navigation-buttons>
+
+        <div class="row">
+          <div class="col-xs-12 col-sm-8 col-md-8">
+            <div class="head-title">
+              <h3>Período {{selectedYearText}}</h3>
+              <h4 *ngIf="indicatorGroupName$ | async as indicatorGroupName">{{ indicatorGroupName }}</h4>
+              <h1>{{ indicator.name }}</h1>
+            </div>
+            <!-- end subsection-text -->
+          </div>
+          <!-- end col-sm-8 -->
+          <div class="col-xs-6 col-sm-2 col-md-2">
+            <div class="head-title">
+              <p class="text-center">Valor Indicador</p>
+              <h1 class="row-h1 text-center">
+                <strong>
+                  <span *ngIf="value$ | async as value else zero;">{{ value | number:'.0-2'}}<span *ngIf="indicator.registriesType === RegistryType.PercentRegistry">%</span> 
+                  </span>
+                </strong> 
+                
+              </h1>
+            </div>
+          </div>
+
+          <div class="col-xs-6 col-sm-2 col-md-2">
+            <div class="head-title">
+              <p class="text-center">Valor Meta</p>
+              <h1 class="row-h1 text-center">
+                <strong>
+                  <span *ngIf="goal$ | async as goal else zero;">{{ goal | number:'.0-2' }}<span *ngIf="indicator.registriesType === RegistryType.PercentRegistry">%</span>
+                  </span>
+                </strong>
+              </h1>
+            </div>
+          </div>
+          <!-- end col-sm-4 -->
+        </div>
+        
+      </div>
+      <!-- end container -->
+    </div>
+</section>
+
+<!-- end head-page-section -->
+  <section [class.hidden]="!isAdminOrManager">
+    <div>
+      <ol class="breadcrumb shortcode">
+        <div *ngIf="indicator.registriesType != RegistryType.ExternalRegistry">
+          <button class="btn btn-xs btn-clean-2" (click)="openModal(editGoalModal)">Modificar Metas</button>
+          <button class="btn btn-xs btn-clean-2" (click)="openModalEditIndicator(editIndicator)">Modificar Indicador</button>
+        </div>
+
+        <div *ngIf="indicator.registriesType == RegistryType.ExternalRegistry">
+            <button class="btn btn-xs btn-clean-2" (click)="openModal(editGoalModal)">Modificar Metas</button>
+        </div>
+      </ol>
+    </div>
+  </section>
+  <!-- about boxes
+  ================================================== -->
+  <section style="margin-top: -70px;">
+    <div class="page-section pad-sec">
+      <div class="container">
+        <!--subtitle row ===================================== -->
+        <div class="row">
+          <div class="col-xs-12 col-sm-12 col-md-12">
+            <div class="heading-block">
+
+              <div class="row">
+                <app-date-filter (dropdownChange)="updateData($event)"></app-date-filter>
+              </div>
+
+              <br><br>
+
+              <div class="row">
+                <div class="col-xs-12 col-sm-12 col-md-12">
+                  <span class="h3">Gráfica de Resultados</span>
+                </div>
+              </div>
+
+              <div class="row">
+                <div class="col-xs-12 col-sm-3 col-md-3">
+                  Seleccione Tipo Gráfico
+                  <br />
+
+                  <div class="btn-group" dropdown *ngIf="indicator.registriesType != RegistryType.PercentRegistry">
+                    <button id="button-basic" dropdownToggle type="button" class="btn btn-primary dropdown-toggle" aria-controls="dropdown-basic">
+                      {{ selectedTypeChart }} <span class="caret"></span>
+                    </button>
+                    <ul id="dropdown-basic" *dropdownMenu class="dropdown-menu"
+                        role="menu" aria-labelledby="button-basic">
+                      <li *ngFor="let typeChart of typesChart"><a class="dropdown-item" (click)="selectChart(typeChart, indicator)">{{ typeChart }}</a></li>
+                    </ul>
+                  </div>
+
+                  <div class="btn-group" dropdown *ngIf="indicator.registriesType == RegistryType.PercentRegistry">
+                    <button id="button-basic" dropdownToggle type="button" class="btn btn-primary dropdown-toggle" aria-controls="dropdown-basic">
+                      Gráfico de dispersión <span class="caret"></span>
+                    </button>
+                    <ul id="dropdown-basic" *dropdownMenu class="dropdown-menu"
+                        role="menu" aria-labelledby="button-basic">
+                      <li *ngFor="let typeChart of typeDispersion"><a class="dropdown-item" (click)="selectChart(typeChart, indicator)">{{ typeChart }}</a></li>
+                    </ul>
+                  </div>
+
+                </div>
+              </div>
+
+            </div>
+          </div>
+          <!-- end col-md-12 -->
+        </div>
+        <!-- end row -->
+        <!--graph row ======================================== -->
+        <!-- end row -->
+        <!--details files row ======================================== -->
+
+        <div *ngIf="chartValues$ | async as chartValues">
+          <div *ngIf="chartGoals$ | async as chartGoals">
+            <app-chart [indicator]="indicator" [selectedTypeChart]="selectedTypeChart" [chartValues]="chartValues" [chartGoals]="chartGoals" [chartLabels]="chartLabels"></app-chart>
+          </div>
+        </div>
+        <!-- There is no data for the following
+        <div class="container" *ngIf="indicator.registriesType == RegistryType.PercentRegistry">
+          <div class="row">
+            <div class="col-md-6">
+              <h4>Desviación estándar: {{devStandar}}</h4>
+              <h4>Varianza: {{varianza}}</h4>
+            </div>
+          </div>
+        </div>
+        -->
+        <br />
+        <div class="row">
+          <div class="col-md-12 pad-bt-60">
+            <div class="heading-block">
+              <div class="row">
+                <div class="col-xs-6 col-sm-6 col-md-6">
+                  <span class="h3">Registros Asociados</span>
+                </div>
+                <div class="col-xs-6 col-sm-6 col-md-6">
+                  <button [class.hidden]="!isWriteAllowed && !isAdminOrManager" type="button" class="btn btn-primary btn-lg pull-right" (click)="openModal(addRegistry)">
+                    <i class="glyphicon glyphicon-plus-sign"></i><span class="hidden-xs"> Añadir Registro</span>
+                  </button>
+                </div>
+              </div>
+            </div>
+            <!--Begin tab-->
+            <app-indicator-detail-registry (updateEvent)="loadDataByFilters()" [indicatorId]="idIndicator" [registries]="indicator.registries" [registriesType]="indicator.registriesType"></app-indicator-detail-registry>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+
+
+  <!--MODALS-->
+
+  <!-- Modal Add Registry -->
+  <ng-template #addRegistry>
+    <div class="modal-header">
+      <h4 class="modal-title pull-left">Ingrese un Nuevo Registro</h4>
+      <button type="button" class="close pull-right" aria-label="Close" (click)="modalRef.hide()">
+        <span aria-hidden="true">&times;</span>
+      </button>
+    </div>
+    <div class="modal-body">
+      <app-registry-form [indicator]="indicator" [idIndicator]="idIndicator" [modalRef]="modalRef"></app-registry-form>
+    </div>
+    <dialog open>
+      <dl>
+        <dt>Un registro de este indicador debe tener:</dt>
+        <dd>-Nombre: el nombre del registro</dd>
+        <dd>-Fecha: Fecha en que fue realizado</dd>
+        <dd>-Doc de respaldo: Constancia de realizacion de activiad</dd>
+        <dd>-Tipo de registro: Seleccionar el tipo correspondiente</dd>
+      </dl>
+    </dialog>
+  </ng-template>
+
+  <!-- Modal Edit Goal -->
+  <ng-template #editGoalModal>
+    <app-goals-editor [indicator]="indicator" (updateGoalEvent)="updateData('')" [modalRef]="modalRef"></app-goals-editor>
+  </ng-template>
+
+  <!-- Modal Edit Indicator -->
+  <ng-template #editIndicator>
+    <div class="modal-header" tabindex="-1">
+      <h4 class="modal-title pull-left">Modificar Indicador</h4>
+      <button type="button" class="close pull-right" aria-label="Close" (click)="indicatorModalRef.hide()">
+        <span aria-hidden="true">&times;</span>
+      </button>
+    </div>
+    <app-indicator-editor [indicatorModalRef]="indicatorModalRef" [indicator]="indicator" (updateInfo)="updateData('')" ></app-indicator-editor>
+  </ng-template>
+
+
+  <ng-template #zero>
+    0<span *ngIf="indicator.registriesType === RegistryType.PercentRegistry">%</span>
+  </ng-template>
+
+</div>
 
 <ng-template #loading>
-  <div class="container">
-    <h2>Cargando datos...</h2>
+  <div id="head-page-section" class="l-grey-bg head-page-section">
+    <div class="container">
+      <div class="row">
+        <div class="col-md-8 col-sm-7">
+          <div class="head-title">
+            <h2>
+              Cargando...
+            </h2>
+          </div>
+        </div>
+      </div>
+    </div>
   </div>
 </ng-template>
 
 <ng-template #noRegistries>
-    <h2>Aún no se han cargado registros.</h2>
+  <h2>Aún no se han cargado registros.</h2>
 </ng-template>
 
-
-
-<div class="container">
-  <h1>    {{ indicator.name }}</h1>
-  <!--h2>Tipo: {{ indicator.type }}</h2-->
-  <!--<div *ngIf="indicator.type == -1">El tipo es default...</div>-->
-  
-
-  <div class="heading-block" *ngIf="registriesCount != 0; else noRegistries">
-    <h2>Detalle de Registros</h2>
-  </div>
-
-  <div class="panel panel-default" *ngFor="let registry of indicator.registries">
-    <!-- Default panel contents -->
-    <div class="panel-heading">
-      {{registry.name}}
-      <div class="pull-right">
-        <button href="#" class="btn btn-success btn-xs" (click)="openModalEditRegistry(editRegistry,registry)"> <span class="glyphicon glyphicon-pencil">  </span>  </button>
-        <button href="#" class="btn btn-danger btn-xs" (click)="deleteRegistry(registry)"> <span class="glyphicon glyphicon-trash"> </span> </button>
-      </div>
-    </div>
-    <div class="panel-body">
-        <div class="container">
-            <h6>Datos registro</h6>
-        </div>
-      <!-- Table -->
-      <table class="table">
-        <tr><td><b>Fecha ingreso de registro</b></td><td></td><td></td><td>{{registry.date | date:'dd-MM-yyyy'}}</td></tr>
-        <tr *ngIf="indicator.type == 1"><td><b>Cantidad</b></td><td></td><td></td><td>{{registry.quantity}}</td></tr>
-        <tr *ngIf="indicator.type == 2"><td><b>Porcentaje</b></td><td></td><td></td><td>{{registry.percent}}%</td></tr>
-      </table>
-      <div class="container">
-          <h6>Documentos de respaldo</h6>
-      </div>
-      <table class="table">
-        <tr *ngFor = "let document of registry.documents">
-          <td><b>{{document.name}}</b></td>
-          <td>{{document.date | date: 'dd-MM-yyyy'}}</td>
-          <td><a href="{{ document.link }}">Descargar</a></td>
-          <td><button class="btn btn-danger btn-xs pull-right" (click)="deleteDocument(registry,document)" > <span class="glyphicon glyphicon-trash"> </span> </button></td>
-        </tr>
-      </table>
-      <!--
-      <table class="table">
-        <thead>
-            <tr><td><b>Documentos de respaldo</b></td><td></td><td></td></tr>
-        <p *ngIf="registry.documents.length == 0"><em> No hay documentos</em></p>
-            
-        </thead>
-        <tbody>
-            <tr *ngFor = "let document of registry.documents">
-                <td><b>{{document.name}}</b></td>
-                <td><a href={{document.link}}>Descargar</a></td>
-                <td><button href="#" class="btn btn-danger btn-xs pull-right" (click)="deleteDocument(document)" > <span class="glyphicon glyphicon-trash"> </span> </button></td>
-              </tr>
-        </tbody>
-      </table>
-      -->
-    </div>
-  </div>
-
-
-
-  <button type="button" class="btn btn-primary btn-lg" data-toggle="modal" data-target="#modal-login">
-    Añadir registro
-  </button>
-
-
-  <!--Modal Edit Registry-->
-  <ng-template #editRegistry>
-      <app-registry-editor [registry]="registry" [type]="type" [editModalRef]="editModalRef" #editRegistry></app-registry-editor>
-  </ng-template>
-
-  <!--END Modal Edit Registry-->
-</div>

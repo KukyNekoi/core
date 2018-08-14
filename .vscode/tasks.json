@@ -7,7 +7,7 @@
             "type": "process",
             "args": [
                 "build",
-                "${workspaceFolder}/think_adgro_metrics.csproj"
+                "${workspaceFolder}/ThinkAgroMetrics.csproj"
             ],
             "problemMatcher": "$msCompile"
         }

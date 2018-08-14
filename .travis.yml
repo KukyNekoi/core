@@ -5,6 +5,10 @@ dotnet: 2.0.0
 install:
 - dotnet restore
 
+before_script:
+- npm i -g npm
+
 script:
- - dotnet build
+- dotnet publish
+        # - dotnet build
 #  - dotnet test MTAServiceStatus.Tests/MTAServiceStatus.Tests.csproj

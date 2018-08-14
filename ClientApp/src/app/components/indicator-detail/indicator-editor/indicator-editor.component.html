@@ -1,0 +1,92 @@
+
+<div class="modal-body">
+  <form #editIndicatorForm="ngForm" >
+    
+    <div class="row">
+      <div class="form-group col-sm-12 col-md-12">
+        <label>Nombre del indicador</label>
+        <input type="text"  class="form-control" id="name" required [(ngModel)]="newIndicator.name" name="name" #name="ngModel" />
+        <div [hidden]="name.valid || name.pristine"
+              class="alert alert-danger">
+          Nombre no puede estar vacio
+        </div>
+      </div>
+    </div>
+    <div class="row">
+      <div class="form-group col-sm-6 col-md-6"> <!-- Enough space just to show the label on the "first line". So, the dropdown will be on the "second line"-->
+        <label>Resultado esperado al que pertenece</label>
+        <div class="btn-group" dropdown>
+          <button id="button-basic" dropdownToggle type="button" class="btn-drop btn btn-sm btn-primary dropdown-toggle" aria-controls="dropdown-basic">
+            {{(selectedText.length&gt;maxLength? (selectedText | slice:0:maxLength)+&apos;..&apos;:(selectedText))}}
+            <span class="caret"></span>
+          </button>
+          <ul id="dropdown-basic" *dropdownMenu class="dropdown-menu"
+              role="menu" aria-labelledby="button-basic">
+            <li *ngFor="let group of groups"><a class="dropdown-item" (click)="updateSelected(group.name)">{{(group.name.length&gt;(maxLength+10)? (group.name | slice:0:(maxLength+10))+&apos;..&apos;:(group.name))}}</a></li>
+          </ul>
+        </div>
+      </div>
+    </div>
+
+    <div class="row" style="margin-right: 20px;margin-left: 10px;">
+      <table class="table table-condensed">
+        <thead>
+        <tr>
+          <th>Rol</th>
+          <td>Lectura</td>
+          <td>Escritura</td>
+        </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <th>Encargado de operaciones	</th>
+            <td><input class="form-check-input" type="checkbox" value="" id="check5" [ngModel]="read.encOp" (ngModelChange)="read.encOp=changeEncOp($event)" name="read3"></td>
+            <td><input class="form-check-input" type="checkbox" value="" id="check6" [(ngModel)]="write.encOp" name="write3" [disabled]="!read.encOp"></td>
+          </tr>
+          <tr>
+            <th>Analista de operaciones	</th>
+            <td><input class="form-check-input" type="checkbox" value="" id="check7" [ngModel]="read.anOp" (ngModelChange)="read.anOp=changeAnOp($event)" name="read4"></td>
+            <td><input class="form-check-input" type="checkbox" value="" id="check8" [(ngModel)]="write.anOp" name="write4" [disabled]="!read.anOp"></td>
+          </tr>
+          <tr>
+            <th>Ejecutivo de post-venta	</th>
+            <td><input class="form-check-input" type="checkbox" value="" id="check9" [ngModel]="read.ejVta" (ngModelChange)="read.ejVta=changeEjVta($event)" name="read5"></td>
+            <td><input class="form-check-input" type="checkbox" value="" id="check10" [(ngModel)]="write.ejVta" name="write5" [disabled]="!read.ejVta"></td>
+          </tr>
+          <tr>
+            <th>Encargada de nuevos negocios	</th>
+            <td><input class="form-check-input" type="checkbox" value="" id="check11" [ngModel]="read.nvoNeg" (ngModelChange)="read.nvoNeg=changeNvoNeg($event)" name="read6"></td>
+            <td><input class="form-check-input" type="checkbox" value="" id="check12" [(ngModel)]="write.nvoNeg" name="write6" [disabled]="!read.nvoNeg"></td>
+          </tr>
+          <tr>
+            <th>Ejecutiva técnica de control y seguimiento	</th>
+            <td><input class="form-check-input" type="checkbox" value="" id="check13" [ngModel]="read.ctrlSeg" (ngModelChange)="read.ctrlSeg=changeCtrlSeg($event)"  name="read7"></td>
+            <td><input class="form-check-input" type="checkbox" value="" id="check14" [(ngModel)]="write.ctrlSeg" name="write7" [disabled]="!read.ctrlSeg"></td>
+          </tr>
+          <tr>
+            <th>Extensionista senior	</th>
+            <td><input class="form-check-input" type="checkbox" value="" id="check15" [ngModel]="read.exSr" (ngModelChange)="read.exSr=changeExSr($event)" name="read8"></td>
+            <td><input class="form-check-input" type="checkbox" value="" id="check16" [(ngModel)]="write.exSr" name="write8" [disabled]="!read.exSr"></td>
+          </tr>
+          <tr>
+            <th>Extensionista junior	</th>
+            <td><input class="form-check-input" type="checkbox" value="" id="check17" [ngModel]="read.exJr" (ngModelChange)="read.exJr=changeExJr($event)" name="read9"></td>
+            <td><input class="form-check-input" type="checkbox" value="" id="check18" [(ngModel)]="write.exJr" name="write9" [disabled]="!read.exJr"></td>
+          </tr>
+          <tr>
+            <th>Periodista</th>
+            <td><input class="form-check-input" type="checkbox" value="" id="check19" [ngModel]="read.prdta" (ngModelChange)="read.prdta=changePrdta($event)" name="read10"></td>
+            <td><input class="form-check-input" type="checkbox" value="" id="check20" [(ngModel)]="write.prdta" name="write10" [disabled]="!read.prdta"></td>
+          </tr>
+        </tbody>
+
+      </table>
+    </div>
+
+  </form>
+</div>
+<div class="modal-footer">
+  <button type="button" (click)="indicatorModalRef.hide()" class="btn btn-sm btn-clean-2" ng-click=cancel()>CANCELAR</button>
+  <button type="button" (click)="saveChanges()" class="btn btn-sm btn-primary" [disabled]="!editIndicatorForm.form.valid">Aceptar</button>
+</div>
+

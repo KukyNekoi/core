@@ -1,0 +1,70 @@
+
+  <!-- Filtros año-mes -->
+  <!--<button type="button" class="btn btn-primary btn-lg" data-toggle="modal" data-target="#modal-login">
+    Filtrar por Fecha
+  </button> -->
+  <!--Dropdown Year Filter-->
+  <div class="col-xs-6 col-md-3">
+    <label>{{ dropdownYearLabel }}</label>
+    <br>
+    <div class="btn-group" dropdown>
+      <button id="button-basic" dropdownToggle type="button" class="btn btn-primary dropdown-toggle" aria-controls="dropdown-basic">
+        {{ dropdownYearText }} <span class="caret"></span>
+      </button>
+      <ul id="dropdown-basic" *dropdownMenu class="dropdown-menu"
+          role="menu" aria-labelledby="button-basic">
+        <li><a class="dropdown-item" (click)="selectYear(this.selectDefault)">{{ allYears }}</a></li>
+        <li *ngFor="let year of years"><a class="dropdown-item" (click)="selectYear(year)">{{ yearPrefix + year }}</a></li>
+      </ul>
+    </div>
+  </div>
+
+  <!--Dropdown Trimester Filter-->  
+  <div class="col-xs-6 col-md-3">
+      <label>{{ dropdownTrimesterLabel }}</label>
+      <br>
+    <div class="btn-group" dropdown [isDisabled]="!isSpecificYearSelected">
+      <button id="button-basic" dropdownToggle type="button" class="btn btn-primary dropdown-toggle" aria-controls="dropdown-basic">
+        {{ dropdownTrimesterText }} <span class="caret"></span>
+      </button>
+      <ul id="dropdown-basic" *dropdownMenu class="dropdown-menu"
+          role="menu" aria-labelledby="button-basic">
+        <li><a class="dropdown-item" (click)="selectTrimester(this.selectDefault)">{{ selectDefaultText }}</a></li>
+        <li *ngFor="let trimester of trimesters"><a class="dropdown-item" (click)="selectTrimester(trimester)">{{ Trimesters[trimester] }}</a></li>
+      </ul>
+    </div>
+  </div>
+
+
+  <!--Dropdown Month Filter-->
+  <div class="col-xs-6 col-md-3">
+    <label>{{ dropdownMonthLabel }}</label>
+    <br>
+    <div class="btn-group" dropdown [isDisabled]="!isSpecificTrimesterSelected">
+      <button id="button-basic" dropdownToggle type="button" class="btn btn-primary dropdown-toggle" aria-controls="dropdown-basic">
+        {{ dropdownMonthText }} <span class="caret"></span>
+      </button>
+      <ul id="dropdown-basic" *dropdownMenu class="dropdown-menu"
+          role="menu" aria-labelledby="button-basic">
+        <li><a class="dropdown-item" (click)="selectMonth(this.selectDefault)">{{ selectDefaultText }}</a></li>
+        <li *ngFor="let month of months"><a class="dropdown-item" (click)="selectMonth(month)">{{ Months[month] }}</a></li>
+      </ul>
+    </div>
+  </div>
+
+
+  <!--Dropdown Week Filter-->
+  <div class="col-xs-6 col-md-3">
+    <label>{{ dropdownWeekLabel }}</label>
+    <br>
+    <div class="btn-group" dropdown [isDisabled]="!isSpecificMonthSelected">
+      <button id="button-basic" dropdownToggle type="button" class="btn btn-primary dropdown-toggle" aria-controls="dropdown-basic">
+        {{ dropdownWeekText }} <span class="caret"></span>
+      </button>
+      <ul id="dropdown-basic" *dropdownMenu class="dropdown-menu"
+          role="menu" aria-labelledby="button-basic">
+        <li><a class="dropdown-item" (click)="selectWeek(this.selectDefault)">{{ selectDefaultText }}</a></li>
+        <li *ngFor="let week of weeks"><a class="dropdown-item" (click)="selectWeek(week)">{{ getWeekString(week) }}</a></li>
+      </ul>
+    </div>
+  </div>

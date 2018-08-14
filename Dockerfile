@@ -1,14 +1,20 @@
-FROM tambase
+FROM microsoft/dotnet:sdk
 
-WORKDIR app/
+RUN apt-get update
+RUN wget https://downloads.wkhtmltopdf.org/0.12/0.12.5/wkhtmltox_0.12.5-1.stretch_amd64.deb  && dpkg -i wkhtmltox_0.12.5-1.stretch_amd64.deb  ; apt --fix-broken install -y
+RUN curl -sL https://deb.nodesource.com/setup_10.x | bash -
+RUN apt-get install -y nodejs && npm i -g npm
 
-COPY ClientAPP/package*.json *.csproj ./
+WORKDIR /app
+VOLUME ./wwwroot/Repository
+COPY *.csproj ./
+COPY . ./
 
-COPY . .
+RUN dotnet publish
 
 ENV ASPNETCORE_Environment=Production
 ENV ASPNETCORE_URLS=http://*:8080 
 
 EXPOSE 8080/tcp
 
-CMD ["dotnet", "run"]
+ENTRYPOINT ["dotnet", "run"]

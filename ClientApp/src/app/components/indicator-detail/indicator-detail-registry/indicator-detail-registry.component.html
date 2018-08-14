@@ -1,0 +1,169 @@
+<div *ngIf="registriesType != RegistryType.ExternalRegistry; else externalRegistries">
+  <ngb-accordion [closeOthers]="true" activeIds="static-1">
+    <ng-template ngFor let-registry [ngForOf]="registries" let-i="index">
+
+      <ngb-panel>
+        <ng-template ngbPanelTitle>
+
+          <div class="row">
+            <div class="col-xs-12 col-sm-5 col-md-5">
+              {{ registry.name | uppercase }}
+              <br>
+              <span class="not-bold-but-italic"> ({{registry.date | date: 'dd-MM-yyyy' || "No Disponible"}})</span>
+            </div>
+            <div class="col-xs-12 col-sm-2 col-md-2">
+              <span class="not-bold-but-italic">
+                <strong *ngIf="registriesType === RegistryType.QuantityRegistry">{{registry.quantity || "0"}}  apariciones</strong>
+                <strong *ngIf="registriesType === RegistryType.PercentRegistry">{{registry.percent || "0"}} % asociado</strong>
+              </span>
+            </div>
+            <div class="col-xs-10 col-sm-4 col-md-4">
+              <div [class.hidden]="!isWriteAllowed && !isAdminOrManager" class="pull-right">
+                <button class="btn btn-xs btn-warning" (click)="openModalEditRegistry($event, editRegistry,registry)">Modificar</button>
+                <button class="btn btn-xs btn-danger" (click)="deleteRegistry($event, registry)">Eliminar</button>
+              </div>
+            </div>
+            <div class="col-xs-2 col-sm-1 col-md-1">
+              <span class="pull-right glyphicon glyphicon-menu-down" style="font-size: 24px;"></span>
+            </div>
+          </div>
+
+        </ng-template>
+
+        <ng-template ngbPanelContent>
+
+          <div [class.hidden]="!isWriteAllowed && !isAdminOrManager"  class="row">
+            <button class="btn btn-xs btn-primary btn-size-text pull-right" (click)="openModalFileDocument($event, fileModal, registry)">Agregar archivo</button>
+            <span class="pull-right">&nbsp;</span>
+            <button class="btn btn-xs btn-primary btn-size-text pull-right" (click)="openModalLinkDocument($event, linkModal, registry)">Agregar link</button>
+          </div>
+          <br [class.hidden]="!isWriteAllowed && !isAdminOrManager"  />
+
+          <ng-template ngFor let-document [ngForOf]="registry.documents" let-i="index">
+              <div class="row">
+
+                <div class="col-xs-12 col-sm-6 col-md-4">
+                  Nombre
+                  <br><strong>{{document.name || "No Disponible"}}</strong>
+                </div>
+                <div class="col-xs-6 col-sm-4 col-md-2">
+                  Fecha
+                  <br><strong>{{document.date | date: 'dd-MM-yyyy' || "No Disponible"}}</strong>
+                </div>
+                <div class="col-xs-6 col-sm-2 col-md-1">
+                  Tipo
+                  <br><strong>{{document.extension || "No Disponible"}}</strong>
+                </div>
+                <div class="col-xs-12 col-sm-12 col-md-5">
+                  <div class="pull-right">
+                    <button class="btn btn-xs btn-success" *ngIf="document.extension=='link'; else viewFileTemplate"
+                            type="button" (click)="goToLinkBlank(document.link)">
+                      Ver
+                    </button>
+                    <ng-template #viewFileTemplate>
+                      <button class="btn btn-xs btn-success" type="button" (click)="openModalDocumentPreview($event, lgModal, document)">
+                        Ver
+                      </button>
+                    </ng-template>
+                    <button class="btn btn-xs btn-info" *ngIf="document.extension=='link'; else downloadFileTemplate"
+                            type="button" (click)="goToLink(document.link)">
+                      Descargar
+                    </button>
+                    <ng-template #downloadFileTemplate>
+                      <button class="btn btn-xs btn-info" type="button" (click)="download(document)">
+                        Descargar
+                      </button>
+                    </ng-template>
+                    <button [class.hidden]="!isWriteAllowed && !isAdminOrManager" class="btn btn-xs btn-warning" type="button" (click)="openModalEditDocument($event, editDocument, document)">Modificar</button>
+                    <button [class.hidden]="!isWriteAllowed && !isAdminOrManager" class="btn btn-xs btn-danger" type="button" (click)="deleteDocument(registry,document)">Eliminar</button>
+                  </div>
+                </div>
+
+              </div>
+              <hr>
+            </ng-template>
+        </ng-template>
+
+      </ngb-panel>
+    </ng-template>
+  </ngb-accordion>
+</div>
+
+<ng-template #externalRegistries>
+  <ngb-accordion>
+      <ng-template ngFor let-registry [ngForOf]="registries" let-i="index">
+        <ngb-panel [disabled]="true">
+          <ng-template ngbPanelTitle style="padding: 1em; border-radius: 0.5em; font-size: 14px; border: 5px solid #c4c4c4 !important; font-weight: bolder;">
+            <div fxLayout="row" >
+              {{registry.name | uppercase}}
+            </div> 
+            <div fxLayout="row" >
+              EMPRESA: {{registry.companyName | uppercase}}
+            </div> 
+            <div fxLayout="row" >
+              <div class="not-bold-but-italic">Visita Técnica: {{registry.date | date: 'dd-MM-yyyy'}}</div>
+            </div> 
+            <div fxLayout="row" >
+              <div class="not-bold-but-italic">Añadido: {{registry.dateAdded | date: 'dd-MM-yyyy'}}</div>
+            </div>              
+          </ng-template>
+
+          <ng-template ngbPanelContent>            
+          </ng-template>
+
+        </ngb-panel>
+      </ng-template>
+    </ngb-accordion>
+</ng-template>
+
+
+<!--Modal Edit Registry-->
+<ng-template #editRegistry>
+  <app-registry-editor [registry]="registry" [registries]="registries" [registriesType]="registriesType" [editModalRef]="editModalRef" #editRegistry></app-registry-editor>
+</ng-template>
+
+<!-- Modals para agregar documentos -->
+<ng-template #linkModal>
+  <div class="modal-header">
+    <h4 class="modal-title pull-left">Ingrese un link externo</h4>
+    <button type="button" class="close pull-right" aria-label="Close" (click)="modalRef.hide()">
+      <span aria-hidden="true">&times;</span>
+    </button>
+  </div>
+  <div class="modal-body">
+    <app-link-document-form [registry]="registry" [idRegistry]="registry.registryID" [modalRef]="modalRef"></app-link-document-form>
+  </div>
+</ng-template>
+
+<ng-template #fileModal>
+  <div class="modal-header">
+    <h4 class="modal-title pull-left">Ingrese un documento de respaldo</h4>
+    <button type="button" class="close pull-right" aria-label="Close" (click)="modalRef.hide()">
+      <span aria-hidden="true">&times;</span>
+    </button>
+  </div>
+  <div class="modal-body">
+    <app-file-document-form [registry]="registry" [idRegistry]="registry.registryID" [modalRef]="modalRef"></app-file-document-form>
+  </div>
+</ng-template>
+<!-- FIN Modals para agregar documentos-->
+<!--Modal Edit Document-->
+<ng-template #editDocument>
+
+  <app-document-editor [document]="document" (updateEvent)="updateData()" [editModalRef]="editModalRef" #editDocument></app-document-editor>
+
+</ng-template>
+
+<!-- Modal document preview -->
+<div bsModal #lgModal="bs-modal" class="modal fade" tabindex="-1"
+     role="dialog" aria-labelledby="dialog-sizes-name1" (onHidden)="document=null">
+  <div class="modal-dialog modal-lg">
+    <div class="modal-content" *ngIf='(document !== null)' >
+        <app-document-preview [document]="document" [modalRef]="modalRef"></app-document-preview>
+    </div>
+    <div class="modal-content" *ngIf='!(document !== null)'>
+      <h2> No existe visualización disponible para este documento. </h2>
+    </div>
+  </div>
+</div>
+<!-- FIN Modal document preview -->

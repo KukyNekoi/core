@@ -2,28 +2,22 @@
   <div id="statistic-section" class="statistic-bg" data-stellar-background-ratio="0">
     <div class="container">
       <div class="row">
+
         <ng-template ngFor let-indicatorGroup [ngForOf]="indicatorGroups" let-i="index">
-          <!--separador-->
-          <div *ngIf="(i%3===0) && (i>0)" class="col-md-12" style="border: 15px solid transparent;"></div>
-          <!-- end col-xs-6 col-sm-3 col-md-3 -->
-          <div class="col-xs-6 col-sm-3 col-md-4">
-            <a class="active" href="/indicatorGroup/{{ indicatorGroup.indicatorGroupID }}">
-              <div class="services-content">
-                <div class="statistic-percent" [attr.data-perc]="">
-                  <div class="fact">
-                    <span class="percentfactor"></span>
-                    <p>{{ indicatorGroup.name }}</p>
-                  </div>
-                  <!-- end fact -->
+          <div class="indicator-block col-xs-12 col-sm-6 col-md-4">
+            <a class="active" (click)="gotoIndicatorGroup(indicatorGroup.indicatorGroupID)">
+              <div class="services-content vertical-size-base">
+                <div class="fact statistic-percent vertical-size" [attr.data-perc]="">
+                  <span class="percentfactor"></span>
+                  <p class="text-ellipsis" title="{{ indicatorGroup.name }}">{{ indicatorGroup.name }}</p>
                 </div>
-                <!-- end statistic-percent -->
               </div>
-              <!-- end col-xs-6 col-sm-3 col-md-3 -->
             </a>
           </div>
         </ng-template>
+
       </div>
-      <!-- end row -->
+      <!-- end container -->
     </div>
     <!-- end container -->
   </div>

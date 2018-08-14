@@ -1,0 +1,100 @@
+<form (ngSubmit)="onSubmit()" #heroForm="ngForm">
+  <div class="row">
+    <div class="form-group col-xs-12 col-sm-8 col-md-8">
+      <label>Nombre</label>
+      <input type="text" placeholder="Nombre" class="form-control" id="name" required [(ngModel)]="model.name" name="name"/>
+      <div [hidden]="true" class="alert alert-danger">
+        Nombre no puede estar vacío
+      </div>
+    </div>
+    <div class="form-group col-xs-12 col-sm-4 col-md-4">
+      <label for="date">Fecha</label>
+      <input type="text" placeholder="Ingrese fecha" class="form-control" id="date" required bsDatepicker [(ngModel)]="model.date" name="date" #date="ngModel"/>
+      <div [hidden]="true" class="alert alert-danger">
+        Fecha es requerida
+      </div>
+    </div>
+    <!--Registro es de tipo cantidad-->
+    <div class="form-group col-sm-12 col-md-12" *ngIf="indicator.registriesType == 1">
+      <label for="quantity">Valor</label>    
+      <input type="text" placeholder="Ingrese valor" pattern="[0-9]{1,}" class="form-control" id="quantity" required [(ngModel)]="model.quantity" name="quantity"/>
+      <div [hidden]="true" class="alert alert-danger">
+        Cantidad deber ser un número entero
+      </div>
+    </div>
+    <div class="form-group col-sm-12 col-md-12" *ngIf="indicator.registriesType == 2">
+      <label for="percent">Valor</label>    
+      <input type="text" placeholder="Ingrese valor" pattern="[0-9]{1,}" class="form-control" id="percent" required [(ngModel)]="model.percent" name="percent"/>
+      <div [hidden]="true" class="alert alert-danger">
+        Cantidad deber ser un número entero
+      </div>
+    </div>
+  </div>
+  <br>
+  <div class="row">
+    <div class="col-sm-12 col-md-12">
+      <h4 class="head-project-title">
+        Documentación de respaldo
+        <a class="btn btn-xs btn-primary pull-right" (click)="openAddDocumentModal($event, documentModal)"><i class="glyphicon glyphicon-plus"></i>Nuevo</a>
+        <!-- 
+          <a class="btn btn-xs btn-primary pull-right" (click)="newIsCollapsed = !newIsCollapsed"><i class="glyphicon glyphicon-plus"></i>Nuevo</a>
+        -->
+      </h4>
+    </div>
+  </div>
+
+  <!-- documents list -->
+  <ng-template ngFor let-document [ngForOf]="documentList" let-i="index">
+    <div fxLayout="row">
+      <div fxFlex="60%">
+        <b>Nombre</b>
+        <br /> {{document.name}}
+      </div>
+      <div fxFlex="20%">
+        <b>Tipo</b>
+        <br /> Link
+      </div>
+      <div fxFlex="20%">
+        <a class="btn btn-xs btn-danger btn-size-text" (click)="deleteLink(document)">Eliminar</a>
+      </div>
+    </div>
+  </ng-template>
+
+  <ng-template ngFor let-document [ngForOf]="fileList" let-i="index">
+    <div fxLayout="row">
+      <div fxFlex="60%">
+        <b>Nombre</b>
+        <br /> {{document[0].name}}
+      </div>
+      <div fxFlex="20%">
+        <b>Tipo</b>
+        <br /> Archivo
+      </div>
+      <div fxFlex="20%">
+        <a class="btn btn-xs btn-danger btn-size-text" (click)="deleteFile(document)">Eliminar</a>
+      </div>
+    </div>
+  </ng-template>
+  <!-- documents list END -->
+
+  <div class="modal-footer">
+    <!--modal-footer needed, in other case, the button will be outside the modal-->
+    <button type="button" class="btn btn-sm btn-clean-2"  (click)="closeModal()">Cancelar</button>
+    <button type="submit" class="btn btn-sm btn-primary" (click)="closeModal()"
+    [disabled]="!fileList[0] && !documentList[0]">Aceptar</button>
+  </div>
+</form>
+
+<!-- Template ADD-Document -->
+<ng-template #documentModal>
+  <div class="modal-header">
+    <h4 class="modal-title pull-left">Ingrese un documento de respaldo</h4>
+    <button type="button" class="close pull-right" aria-label="Close" (click)="submodalRef.hide()">
+      <span aria-hidden="true">&times;</span>
+    </button>
+  </div>
+  <div class="modal-body">
+    <app-add-document-form [modalRef]="submodalRef" (fileAdded)="addFile($event)" 
+    (linkAdded)="addLink($event)"></app-add-document-form>
+  </div>
+</ng-template>

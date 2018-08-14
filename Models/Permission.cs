@@ -5,9 +5,11 @@ using System.Threading.Tasks;
 
 namespace think_agro_metrics.Models
 {
-    public class LinkWrapper
+    public class Permission
     {
-        public long LinkWrapperID { get; set; }
-        public String Value { get; set; }
+        public long PermissionID { get; set; }
+        public long IndicatorID { get; set; }
+
+        
     }
 }

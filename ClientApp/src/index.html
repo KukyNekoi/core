@@ -4,14 +4,80 @@
   <meta charset="utf-8">
   <title>think_agro_metrics</title>
   <base href="/">
+  <style>
+    .loader-wheel {
+      position: absolute;
+      left: 50%;
+      top: 50%;
+      margin: -30px 0px 0px -30px;
+      width: 60px;
+      height: 60px;
+      border: 5px solid transparent;
+      border-left: 5px solid #FFFFFF;
+      border-radius: 100%;
+      animation: spin infinite 3.5s linear;
+    }
 
-  <link href='https://fonts.googleapis.com/css?family=Open+Sans:400,400italic,600,600italic,700,700italic,300italic,300' rel='stylesheet' type='text/css'>
-  <link href='http://fonts.googleapis.com/css?family=Abel' rel='stylesheet' type='text/css'>
-  <link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" rel="stylesheet">
+      .loader-wheel::before {
+        content: "";
+        position: absolute;
+        margin-left: 5px;
+        margin-top: 5px;
+        width: 40px;
+        height: 40px;
+        border: 5px solid transparent;
+        border-left: 5px solid #429345;
+        border-radius: 100%;
+        animation: spin infinite 2.5s linear;
+      }
+
+      .loader-wheel::after {
+        content: "";
+        position: absolute;
+        margin-left: 15px;
+        margin-top: 15px;
+        width: 20px;
+        height: 20px;
+        border: 5px solid transparent;
+        border-left: 5px solid #FFFFFF;
+        border-radius: 100%;
+        animation: spin infinite 1.5s linear;
+      }
+
+    @keyframes spin {
+      0% {
+        transform: rotateZ(0deg);
+      }
+
+      100% {
+        transform: rotateZ(360deg);
+      }
+    }
+
+    .loading-wheel {
+      position: fixed;
+      z-index: 2;
+      height: 100%;
+      width: 100%;
+      background-color: #0000008A;
+    }
+  </style>
+  <link href='https://fonts.googleapis.com/css?family=Open+Sans:400,400italic,600,600italic,700,700italic,300italic,300' rel="preload" as="style">
+  <link href='http://fonts.googleapis.com/css?family=Abel' rel="preload" as="style">
+
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <link rel="icon" type="image/x-icon" href="favicon.ico">
 </head>
 <body>
-  <app-root>Loading...</app-root>
+  <app-root>
+    <div class="loading-wheel">
+      <div class="loader-wheel"></div>
+    </div>
+  </app-root>
+
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+  <script src="assets/js/vertical-size.js"></script>
+  <script src="assets/js/bootstrap.min.js"></script>
 </body>
+
 </html>

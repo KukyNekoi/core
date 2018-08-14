@@ -20,7 +20,8 @@
       "styles": [
         "styles.scss",
         "../node_modules/bootstrap/dist/css/bootstrap.min.css",
-        "assets/css/style.css"
+        "assets/css/style.css",
+        "../node_modules/ngx-bootstrap/datepicker/bs-datepicker.css"
       ],
       "scripts": [],
       "environmentSource": "environments/environment.ts",

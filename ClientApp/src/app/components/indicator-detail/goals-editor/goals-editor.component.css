@@ -1,0 +1,15 @@
+.ng-valid.form-control, .ng-valid.required {
+  border-left: 5px solid #5cb85c; /* green */
+}
+
+.ng-invalid:not(form).form-control{
+  border-left: 5px solid #d9534f;
+}
+
+.btn-cancel {
+  margin-right:5px;
+}
+
+.btn-confirm {
+  margin-left:5px;
+}

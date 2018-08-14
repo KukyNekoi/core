@@ -1,4 +1,9 @@
-node_modules
+.git
+.cache
 ClientApp/node_modules
+obj
+bin
+README.md
+node_modules
 ClientApp/npm-debug.log
 

@@ -1,0 +1,49 @@
+
+<div class="modal-header">
+  <h4 class="modal-title pull-left">Editar documento</h4>
+  <button type="button" class="close pull-right" aria-label="close" (click)="editModalRef.hide()">
+    <span aria-hidden="true">&times;</span>
+  </button>
+</div>
+<div class="modal-body">
+  <form (ngSubmit)="editDocument()" #documentEditForm="ngForm">
+    <div class="form-group">
+      <label for="name">Nombre</label>
+      <input type="text" class="form-control" id="name" required [(ngModel)]="newDocument.name" name="name" #name="ngModel" />
+      <div [hidden]="name.valid || name.pristine"
+           class="alert alert-danger">
+        Nombre no puede estar vacio
+      </div>
+    </div>
+
+    <div class="form-group">
+      <label for="date">Fecha</label>
+      <input class="form-control" id="date" required [(ngModel)]="newDocument.date" name="date" #date="ngModel" bsDatepicker [minDate]="minDate" [maxDate]="maxDate" [bsConfig]="{ dateInputFormat: 'DD-MM-YYYY' }" />
+      <div [hidden]="(date.valid || date.pristine)"
+           class="alert alert-danger">
+        Fecha es requerida
+      </div>
+    </div>
+
+    <!--Corresponde a indicador con subida de links-->
+    <div class="form-group" *ngIf="document.extension == 'link'">
+      <label for="link">Link</label>
+      <input type="text" class="form-control" id="link" required [(ngModel)]="newDocument.link" name="link" #link="ngModel" />
+      <div [hidden]="(link.valid || link.pristine)"
+           class="alert alert-danger">
+        Link es requerido
+      </div>
+    </div>
+    <!--<div class="form-group" *ngIf="document.extension !== 'link'">
+    <input #file type="file" /> {{document.documentname}}
+  </div>-->
+
+
+
+
+    <div class="modal-footer">
+      <!--modal-footer needed, in other case, the button will be outside the modal-->
+      <button type="submit" class="btn btn-success pull-right" [disabled]="!documentEditForm.form.valid">Editar</button>
+    </div>
+  </form>
+</div>

@@ -1,0 +1,33 @@
+<div class="modal-header">
+    <h4 *ngIf="document" id="dialog-sizes-name1" class="modal-title pull-left">{{document.name}}</h4>
+    <button type="button" class="close pull-right" (click)="modalRef.hide()" aria-label="Close">
+      <span aria-hidden="true">&times;</span>
+    </button>
+  </div>
+<div class="modal-body">
+  <div *ngIf="document">
+    Extension:{{document.extension}}
+
+    <div *ngIf="document.extension!='.pdf'
+    && document.extension!='.jpg'
+    && document.extension!='.jpeg'
+    && document.extension!='.png'
+    && document.extension!='link'; else contentDiv">
+      Lo sentimos. No existe una vista previa para este archivo.
+    </div>
+  </div>
+  <ng-template #contentDiv>
+    <div *ngIf="loading" class="inner-loading-wheel">
+      <div class="loader-wheel"></div>
+    </div>
+    <div *ngIf="document.extension=='.pdf'">
+      <pdf-viewer src="{{'/api/Files/' + this.document.link}}" (after-load-complete)="loading=false">
+      </pdf-viewer>
+    </div>
+    <div *ngIf="document.extension=='.jpg' || document.extension=='.jpeg' || document.extension=='.png'">
+      <img src="{{'/api/Files/' + this.document.link}}" (load)="loading=false">
+    </div>
+    <iframe style="height:80vh; width:100%;" *ngIf="document.extension=='link'"
+            [src]="this.document.link | safeDom" (load)="loading=false"></iframe>
+  </ng-template>
+</div>

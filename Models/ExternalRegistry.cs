@@ -6,12 +6,10 @@ using System.ComponentModel.DataAnnotations.Schema;
 
 namespace think_agro_metrics.Models
 {
-    public class LinkRegistry : Registry
+    public class ExternalRegistry : Registry
     {
-        public ICollection<LinkWrapper> Links { get; set; }
+        public string CompanyName { get; set; }
 
-        public LinkRegistry() {
-            this.Links = new List<LinkWrapper>();
-        }
+        public ExternalRegistry() { }
     }
 }

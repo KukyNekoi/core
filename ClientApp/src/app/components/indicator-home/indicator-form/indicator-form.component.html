@@ -1,0 +1,127 @@
+<form (ngSubmit)="onSubmit()" #indicatorForm="ngForm">
+  <div class="modal-body">
+    <div class="row">
+      <div class="form-group col-xs-12 col-sm-12 col-md-12">
+        <label>Nombre</label>
+        <input type="text" placeholder="Nombre" class="form-control" id="name" required [(ngModel)]="model.name"
+               name="name" #name="ngModel"/>
+        <div [hidden]="name.valid || name.pristine"
+             class="alert alert-danger">
+          Nombre no puede estar vacio
+        </div>
+      </div>
+    </div>
+    <div class="row">
+      <div class="form-group col-xs-12 col-sm-4 col-md-5">
+        <label>Tipo de registros</label>
+        <div class="btn-group" dropdown>
+          <button id="button-basic" dropdownToggle type="button" class="btn btn-sm btn-primary dropdown-toggle"
+                  aria-controls="dropdown-basic">
+            {{ selectedIndicatorTypeText }}
+            <span class="caret"></span>
+          </button>
+          <ul id="dropdown-basic" *dropdownMenu class="dropdown-menu"
+              role="menu" aria-labelledby="button-basic">
+            <li *ngFor="let type of types"><a class="dropdown-item" (click)="updateDropdown(type)">{{ type }}</a></li>
+          </ul>
+        </div>
+      </div>
+      <div class="form-group col-xs-12 col-sm-12 col-md-5 col-md-offset-2"
+           *ngIf="selectedIndicatorTypeText == types[1] || selectedIndicatorTypeText == types[2]">
+        <label *ngIf="selectedIndicatorTypeText == types[1]">Nombre de registros <a
+          popover="Nombre de los registros (ej. Empresas, Entidades, Asistentes, etc.)"
+          triggers="mouseenter:mouseleave">(?)</a></label>
+        <label *ngIf="selectedIndicatorTypeText == types[2]">Nombre del porcentaje <a
+          popover="¿Qué representa el porcentaje?(ej. % de satisfacción)"
+          triggers="mouseenter:mouseleave">(?)</a></label>
+        <input type="text" class="form-control" id="registriesName" required [(ngModel)]="model.registriesName"
+               name="registriesName" #registriesName="ngModel"/>
+        <div [hidden]="(registriesName.valid || registriesName.pristine)"
+             class="alert alert-danger">
+          No puede esta vacio
+        </div>
+      </div>
+    </div>
+
+
+
+    <div class="row">
+      <div class="form-group col-xs-12 col-sm-12 col-md-12">
+        <label>Descripción de los registros</label>
+        <textarea class="form-control" rows="3" [(ngModel)]="model.registriesDescription" name="registriesDescription"
+                  #registriesDescription="ngModel"></textarea>
+      </div>
+    </div>
+    <div class="row"><label>Administración de permisos</label></div>
+    <div class="row">
+      <table class="table table-condensed">
+        <thead>
+        <tr>
+          <th>Rol</th>
+          <td>Lectura</td>
+          <td>Escritura</td>
+        </tr>
+        </thead>
+        <tbody>
+        <tr>
+          <th>Administrador</th>
+          <td><input class="form-check-input" type="checkbox" value="" id="check1" [(ngModel)]="read.adm" name="read1" disabled></td>
+          <td><input class="form-check-input" type="checkbox" value="" id="check2" [(ngModel)]="write.adm" name="write1" disabled></td>
+        </tr>
+        <tr>
+          <th>Gerencia y dirección	</th>
+          <td><input class="form-check-input" type="checkbox" value="" id="check3" [(ngModel)]="read.ger" name="read2" disabled></td>
+          <td><input class="form-check-input" type="checkbox" value="" id="check4" [(ngModel)]="write.ger" name="read" [disabled]="!read.ger"></td>
+        </tr>
+        <tr>
+          <th>Encargado de operaciones	</th>
+          <td><input class="form-check-input" type="checkbox" value="" id="check5" [(ngModel)]="read.encOp" name="read3" disabled></td>
+          <td><input class="form-check-input" type="checkbox" value="" id="check6" [(ngModel)]="write.encOp" name="write3" [disabled]="!read.encOp"></td>
+        </tr>
+        <tr>
+          <th>Analista de operaciones	</th>
+          <td><input class="form-check-input" type="checkbox" value="" id="check7" [(ngModel)]="read.anOp" name="read4" disabled></td>
+          <td><input class="form-check-input" type="checkbox" value="" id="check8" [(ngModel)]="write.anOp" name="write4" disabled></td>
+        </tr>
+        <tr>
+          <th>Ejecutivo de post-venta	</th>
+          <td><input class="form-check-input" type="checkbox" value="" id="check9" [(ngModel)]="read.ejVta" name="read5"></td>
+          <td><input class="form-check-input" type="checkbox" value="" id="check10" [(ngModel)]="write.ejVta" name="write5" [disabled]="!read.ejVta"></td>
+        </tr>
+        <tr>
+          <th>Encargada de nuevos negocios	</th>
+          <td><input class="form-check-input" type="checkbox" value="" id="check11" [(ngModel)]="read.nvoNeg" name="read6" disabled></td>
+          <td><input class="form-check-input" type="checkbox" value="" id="check12" [(ngModel)]="write.nvoNeg" name="write6" disabled></td>
+        </tr>
+        <tr>
+          <th>Ejecutiva técnica de control y seguimiento	</th>
+          <td><input class="form-check-input" type="checkbox" value="" id="check13" [(ngModel)]="read.ctrlSeg" name="read7"></td>
+          <td><input class="form-check-input" type="checkbox" value="" id="check14" [(ngModel)]="write.ctrlSeg" name="write7" [disabled]="!read.ctrlSeg"></td>
+        </tr>
+        <tr>
+          <th>Extensionista senior	</th>
+          <td><input class="form-check-input" type="checkbox" value="" id="check15" [(ngModel)]="read.exSr" name="read8"></td>
+          <td><input class="form-check-input" type="checkbox" value="" id="check16" [(ngModel)]="write.exSr" name="write8" [disabled]="!read.exSr"></td>
+        </tr>
+        <tr>
+          <th>Extensionista junior	</th>
+          <td><input class="form-check-input" type="checkbox" value="" id="check17" [(ngModel)]="read.exJr" name="read9"></td>
+          <td><input class="form-check-input" type="checkbox" value="" id="check18" [(ngModel)]="write.exJr" name="write9" [disabled]="!read.exJr"></td>
+        </tr>
+        <tr>
+          <th>Periodista</th>
+          <td><input class="form-check-input" type="checkbox" value="" id="check19" [(ngModel)]="read.prdta" name="read10"></td>
+          <td><input class="form-check-input" type="checkbox" value="" id="check20" [(ngModel)]="write.prdta" name="write10" [disabled]="!read.prdta"></td>
+        </tr>
+        </tbody>
+
+      </table>
+    </div>
+
+  </div>
+  <div class="modal-footer">
+    <!--modal-footer needed, in other case, the button will be outside the modal-->
+    <button type="button" class="btn btn-sm btn-clean-2" (click)="modalRef.hide()">Cancelar</button>
+    <button type="submit" class="btn btn-sm btn-primary" [disabled]="!indicatorForm.form.valid">Aceptar</button>
+  </div>
+</form>

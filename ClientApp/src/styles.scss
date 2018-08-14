@@ -1,3 +1,42 @@
 /* You can add global styles to this file, and also import other style files */
 $fa-font-path: "~font-awesome/fonts";
 @import '~font-awesome/scss/font-awesome';
+
+// Datepicker color 
+.theme-green .bs-datepicker-head { 
+  background-color: #47b475 !important; 
+} 
+
+.theme-green .bs-datepicker-body table td span.selected, 
+.theme-green .bs-datepicker-body table td.selected span, 
+.theme-green .bs-datepicker-body table td span[class*="select-"]:after, 
+.theme-green .bs-datepicker-body table td[class*="select-"] span:after { 
+  background-color: #47b475 !important; 
+} 
+
+.theme-green .bs-datepicker-body table td.week span { 
+  color: #47b475 !important;  
+}
+
+// Capitalize datepicker's months names
+bs-datepicker-navigation-view .current, .bs-datepicker-body .months{
+  text-transform: capitalize;
+}
+
+// Remove datepicker's border
+.bs-datepicker-container {
+  padding: 0px !important;
+}
+
+.bs-datepicker {
+  border-radius: 5px;
+}
+
+// Angular forms input status theming
+.ng-valid.form-control[required], .ng-valid.required {
+  border-left: 5px solid #5cb85c; /* green */
+}
+
+.ng-invalid:not(form).form-control{
+  border-left: 5px solid #d9534f;
+}

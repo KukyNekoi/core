@@ -1,0 +1,25 @@
+<form #editIndicatorGroupForm="ngForm" (ngSubmit)="onSubmit()">
+  <div class="modal-body">
+    <div class="row">
+      <div class="col-xs-12 col-sm-12 col-md-12">
+        <h4 class="head-project-title">Información Básica</h4>
+      </div>
+    </div>
+    <div class="row">
+      <div class="form-group col-sm-12 col-md-12">
+        <label>Nombre del resultado esperado</label>
+        <input type="text"  class="form-control" id="name" required [(ngModel)]="editedIndicatorGroup.name" name="name" #name="ngModel" />
+        <div [hidden]="name.valid || name.pristine"
+             class="alert alert-danger">
+          Nombre no puede estar vacio
+        </div>
+      </div>
+    </div>
+
+
+  </div>
+  <div class="modal-footer"> <!--modal-footer needed, in other case, the button will be outside the modal-->
+    <button type="button" (click)="modalRef.hide()" class="btn btn-sm btn-clean-2" ng-click=cancel()>Cancelar</button>
+    <button type="submit" class="btn btn-sm btn-primary" [disabled]="!editIndicatorGroupForm.form.valid">Aceptar</button>
+  </div>
+</form>

@@ -8,7 +8,7 @@ namespace think_agro_metrics.Models
 {
     public class PercentRegistry : Registry
     {
-        public int Percent { get; set; }
+        public double Percent { get; set; }
 
         public PercentRegistry() { }
     }

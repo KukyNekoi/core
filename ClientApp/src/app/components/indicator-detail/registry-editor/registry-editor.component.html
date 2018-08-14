@@ -1,4 +1,3 @@
-
 <div class="modal-header">
   <h4 class="modal-title pull-left">Editar registro</h4>
   <button type="button" class="close pull-right" aria-label="close" (click)="editModalRef.hide()">
@@ -6,10 +5,10 @@
   </button>
 </div>
 <div class="modal-body">
-  <form (ngSubmit)="editRegistry()" #registryEditForm="ngForm">
+  <form #registryEditForm="ngForm">
     <div class="form-group">
       <label for="name">Nombre</label>
-      <input type="text" class="form-control" id="name" required [(ngModel)]="registry.name" name="name" #name="ngModel" />
+      <input type="text" class="form-control" id="name" required [(ngModel)]="newRegistry.name" name="name" #name="ngModel" />
       <div [hidden]="name.valid || name.pristine"
             class="alert alert-danger">
         Nombre no puede estar vacio
@@ -18,53 +17,35 @@
 
     <div class="form-group">
       <label for="date">Fecha</label>
-      <input type="date" class="form-control" id="date" required [(ngModel)]="registry.date" name="date" #date="ngModel" />
+      <input class="form-control" id="date" required [(ngModel)]="newRegistry.date" name="date" #date="ngModel"  bsDatepicker [minDate]="minDate" [maxDate]="maxDate" [bsConfig]="{ dateInputFormat: 'DD-MM-YYYY' }"/>
       <div [hidden]="(date.valid || date.pristine)"
             class="alert alert-danger">
         Fecha es requerida
       </div>
     </div>
 
-    <div class="form-group" *ngIf="type === 1">
-      <label for="quantity">Valor</label>
-      <input type="text" pattern="[0-9]{1,}" class="form-control" id="quantity" required [(ngModel)]="registry.quantity" name="quantity" #quantity="ngModel" />
+    <div class="form-group" *ngIf="registriesType === 1">
+      <label for="quantity">Cantidad</label>
+      <input type="text" pattern="[0-9]{1,}" class="form-control" id="quantity" required [(ngModel)]="newRegistry.quantity" name="quantity" #quantity="ngModel" />
       <div [hidden]="(quantity.valid || quantity.pristine)"
             class="alert alert-danger">
-        Cantidad deber ser un número entero
+        Cantidad debe ser un número entero
       </div>
     </div>
 
-    <div class="form-group" *ngIf="type === 2">
+    <div class="form-group" *ngIf="registriesType === 2">
       <label for="percent">Porcentaje</label>
-      <input type="text" pattern="[0-9]{1,}[\.]{0,1}[0-9]{1,}" class="form-control" id="percent" required [(ngModel)]="registry.percent" name="percent" #percent="ngModel" />
+      <input type="text" pattern="[0-9]{1,}([\.][0-9]{1,2}){0,1}" class="form-control" id="percent" required [(ngModel)]="registry.percent" name="percent" #percent="ngModel" />
       <div [hidden]="(percent.valid || percent.pristine)"
             class="alert alert-danger">
         Porcentaje debe ser un número entero o decimal (punto "." es separador de decimales)
       </div>
     </div>
     
-    <!--Documents section deleted/commented because Design will do this in another way
-    <div class="heading-block">
-      <h4>Documentos</h4>
-    </div>
-    <div class="panel panel-default">
-      <table class="table">
-        <thead><tr><td>Nombre</td><td></td></tr></thead>
-        <tbody>
-          <tr *ngFor="let document of registry.registry.documents">
-            <td>{{ document.name }}</td>
-            <td>
-              <button href="#" class="btn btn-danger btn-xs" (click)="deleteDocument(document)" > <span class="glyphicon glyphicon-trash"> </span> </button>
-            </td>
-          </tr>
-        </tbody>
-      </table>
-    </div>
-    -->
     <div class="modal-footer"> <!--modal-footer needed, in other case, the button will be outside the modal-->
-      <button type="submit" class="btn btn-success pull-right" [disabled]="!registryEditForm.form.valid">Editar</button>
+      <button class="btn btn-clean-2" (click)="editModalRef.hide()">CANCELAR</button>
+      <button type="submit" class="btn btn-primary" [disabled]="!registryEditForm.form.valid" (click)="editRegistry()">Editar</button>
     </div>
   </form>
 </div>
 
-    

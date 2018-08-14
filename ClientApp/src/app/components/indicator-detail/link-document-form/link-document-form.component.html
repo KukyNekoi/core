@@ -1,0 +1,32 @@
+<form (ngSubmit)="onSubmit()" #heroForm="ngForm">
+  <div class="row">
+    <div class="form-group col-xs-12 col-sm-8 col-md-8">
+      <label>Nombre Registro:</label>
+      <input type="text" placeholder="Nombre" class="form-control" id="name" required [(ngModel)]="model.name" name="name" />
+      <div [hidden]="true" class="alert alert-danger">
+        Nombre no puede estar vacío
+      </div>
+    </div>
+    <div class="form-group col-xs-12 col-sm-4 col-md-4">
+      <label for="date">Fecha</label>
+      <input type="text" placeholder="Ingrese fecha" class="form-control" id="date" required bsDatepicker [(ngModel)]="model.date" name="date" #date="ngModel" />
+      <div [hidden]="true" class="alert alert-danger">
+        Fecha es requerida
+      </div>
+    </div>
+    <div class="form-group col-sm-12 col-md-12">
+      <label>Link: </label>
+      <input type="text" class="form-control"
+             id="link"
+             placeholder="http://www.ejemplo.cl/recurso"
+             required
+             [(ngModel)]="model.link"
+             name="link"
+             #link="ngModel">
+      <div [hidden]="link.valid || link.pristine" class="alert alert-danger">
+        Ingrese un link
+       </div>
+      </div>
+    </div>
+    <input type="submit" class="btn btn-primary">
+</form>

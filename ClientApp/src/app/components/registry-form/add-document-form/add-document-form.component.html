@@ -1,0 +1,21 @@
+<div>
+  <form>
+      <label class="col-xs-6" style="text-align: center;">
+        <input type="radio" name="docType" value="link" checked="checked"
+        (change)="linkChecked=true">Link
+      </label>
+      <label class="col-xs-6" style="text-align: center;">
+        <input type="radio" name="docType" value="archivo"
+        (change)="linkChecked=false">Archivo
+      </label>
+  </form>
+</div>
+
+<div>
+  <div *ngIf="linkChecked">
+    <app-link-document-subform (docAdded)="emitLink($event)"></app-link-document-subform>
+  </div>
+  <div *ngIf="!linkChecked">
+    <app-file-document-subform (docAdded)="emitFile($event)"></app-file-document-subform>
+  </div>
+</div>

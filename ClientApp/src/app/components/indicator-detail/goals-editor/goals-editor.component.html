@@ -1,0 +1,82 @@
+<div class="modal-header">  
+  <button type="button" class="close pull-right" aria-label="close" (click)="closeModal()">
+    <span aria-hidden="true">&times;</span>
+  </button>
+  <h4 class="modal-title pull-left">Modificar Metas</h4>
+</div>
+
+<div class="modal-body">
+  <!-- Title -->
+<!-- 
+  <div class="row" style="margin-left: 0px !important; margin-right: 0px !important;">  
+    <button type="button" class="close pull-right" aria-label="close" (click)="closeModal()">
+      <span aria-hidden="true">&times;</span>
+    </button>
+    <h4 class="modal-title head-project-title">Editor de Metas</h4>
+  </div>
+   -->
+  
+  <!-- Content -->
+  <div class="row">
+
+    <div class="col-sm-6">        
+      <label>Seleccione el año de las metas:</label>
+      <br>
+
+      <!-- Dropdown of years -->
+      <div class="btn-group" dropdown>
+        <button id="button-basic" dropdownToggle type="button" class="btn btn-sm btn-primary dropdown-toggle" aria-controls="dropdown-basic">
+          {{ selectedYearText }} <span class="caret"></span>
+        </button>
+        <ul id="dropdown-basic" *dropdownMenu class="dropdown-menu" role="menu" aria-labelledby="button-basic">
+          <li *ngFor="let year of years; let i = index">
+            <a class="dropdown-item" (click)="setSelectedYear(i)">{{yearText}}{{year}}</a>
+          </li>
+        </ul>
+      </div>
+    </div>
+    <div class="visible-xs" style="margin-bottom: 20px"></div>
+  
+    <!-- Button Add Goal -->
+    <div class="col-md-6">
+      <button (click)="addGoal()" class="btn btn-xs btn-primary pull-right"><i class="glyphicon glyphicon-plus"></i> Nueva Meta</button>
+    </div>      
+  </div>  
+
+  <!-- Form -->
+  <div class="row" style="margin-top: 20px">
+    <!-- class="well well-lg" -->
+    <form  style="margin-left: 15px !important; margin-right: 15px !important" [formGroup]="form">
+      <div formArrayName="monthlyGoals">
+
+        <div *ngFor="let f of monthlyGoals.controls; let i = index" [formGroupName]="i">          
+          <div *ngIf="initialYear + Math.floor(i/12) === selectedYear">
+            <div class="form-group col-sm-3 col-xs-4">
+              <label for="month">{{Months[i % 12]}}:</label>
+              <input (keyup)="setChanged()" class="form-control" formControlName="month" id="month" type="text">            
+              <div *ngIf="!f.controls.month.valid" class="alert alert-danger">
+                <div *ngIf="f.controls.month.errors.required">{{requiredError}}</div>
+                <div *ngIf="f.controls.month.errors.pattern && indicator.registriesType != 2">{{patternErrorNatural}}</div>
+                <div *ngIf="f.controls.month.errors.pattern && indicator.registriesType == 2">{{patternErrorDecimal}}</div>  
+              </div>
+            </div>
+            <div *ngIf="(i + 1) % 4 === 0">
+                <div class="clearfix visible-sm visible-md visible-lg"></div>
+            </div>
+            <div *ngIf="(i + 1) % 3 === 0">
+                <div class="clearfix visible-xs"></div>
+            </div>                  
+          </div>
+        </div>
+        <div class="clearfix"></div>
+      </div>
+    </form>
+  </div>
+  
+
+  <div class="modal-footer">
+    <button type="button" (click)="revertChanges()" class="btn btn-sm btn-clean-2">CANCELAR</button>
+    <button [disabled]="!this.form.valid || !(this.isChanged || this.isAdded)" type="submit" (click)="saveChanges()" class="btn btn-sm btn-primary">Guardar</button>
+  </div>
+
+</div>

@@ -1,21 +1,54 @@
-     <!-- Head page section================================================== -->
-     
-      <div id="head-page-section" class="l-grey-bg head-page-section">
-       <div class="container">
-          <div class="row">
-            <div class="col-md-8 col-sm-7">
-               <div class="head-title">
-                <h1>
-                  Resultados e Indicadores
-                </h1>
-              </div> <!-- end subsection-text -->
-            </div> <!-- end col-md-8 -->
-          </div> <!-- end row -->
-        </div> <!-- end container -->
-      </div>
-    <!-- end head-page-section -->
-    <!-- about boxes
-================================================== -->
-<div *ngIf="indicatorGroup$ | async as indicatorGroup">
-    <app-indicator-display [indicatorGroup]="indicatorGroup"></app-indicator-display>
+<!-- Head page section================================================== -->
+
+<div id="head-page-section" class="l-grey-bg head-page-section">
+  <div class="container">
+    <app-navigation-buttons></app-navigation-buttons>
+    <div class="row">
+      <div class="col-md-8 col-sm-6">
+        <div class="head-title">
+          <h1>
+            Resultados e Indicadores
+          </h1>
+        </div> <!-- end subsection-text -->
+      </div> <!-- end col-md-8 -->
+      <div class="col-md-4 col-sm-6">
+        <button [class.hidden]="!isAdminOrManager" type="button" class="btn btn-primary btn-md pull-right" (click)="openModal(addIndicator)">
+          Agregar indicador <span class="glyphicon glyphicon-plus"> </span>
+        </button>
+      </div> <!-- end col-md-4 -->
+    </div> <!-- end row -->
+  </div> <!-- end container -->
 </div>
+<!-- end head-page-section -->
+<!-- about boxes
+================================================== -->
+
+<section>
+  <div class="container">
+    <div class="heading-block">
+      <h2>{{ (indicatorGroup$ | async)?.name }}</h2>
+    </div>
+
+    <app-date-filter (dropdownChange)="updateObservables($event)"></app-date-filter>
+
+  </div>
+  <!-- end container -->
+</section>
+<br>
+
+<app-indicator-display *ngIf="indicatorGroup$ | async as indicatorGroup" [indicatorResultsObservable]="indicatorResults$" [goalsObservable]="goals$" [indicatorGroup]="indicatorGroup"></app-indicator-display>
+
+<ng-template #addIndicator>
+  <div class="modal-dialog">
+    <div class="modal-header">
+      <h4 class="modal-title pull-left">Ingrese un nuevo indicador</h4>
+      <button type="button" class="close pull-right" aria-label="Close" (click)="modalRef.hide()">
+        <span aria-hidden="true">&times;</span>
+      </button>
+    </div>
+    <div class="modal-body">
+      <app-indicator-form (udpateEvent)="updateObservables('')" [modalRef]="modalRef" [idIndicatorGroup]="idIndicatorGroup"></app-indicator-form>
+    </div>
+  </div>
+</ng-template>
+

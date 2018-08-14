@@ -2,21 +2,44 @@
      <section>
       <div id="head-page-section" class="l-grey-bg head-page-section">
        <div class="container">
-          <div class="row">
-            <div class="col-md-8 col-sm-7">
-               <div class="head-title">
-                <h1>
-                  Resultados
-                </h1>
-              </div> <!-- end subsection-text -->
-            </div> <!-- end col-md-8 -->
-          </div> <!-- end row -->
+         <div class="row">
+           <div class="col-md-4 col-sm-4 col-xs-12">
+             <div class="head-title">
+               <h1>
+                 Resultados
+               </h1>
+             </div> <!-- end subsection-text -->
+           </div> <!-- end col-md-8 -->
+          <div class="col-md-8 col-sm-8 col-xs-12 text-right">
+             <button [class.hidden]="!isAdminOrManager" type="button" class="btn btn-primary btn-md" (click)="openModal(addIndicatorGroup)">
+              Agregar grupo de indicadores <span class="glyphicon glyphicon-plus"> </span>
+             </button>
+           </div> <!-- end col-md-4 -->
+         </div> <!-- end row -->
         </div> <!-- end container -->
       </div>
     </section>
     <!-- end head-page-section -->
     <!-- about boxes
 ================================================== -->
+
 <div *ngIf="indicatorGroups$ | async as indicatorGroups">
+
   <app-result-display [indicatorGroups]="indicatorGroups" ></app-result-display>
+
 </div>
+
+
+<ng-template #addIndicatorGroup>
+  <div class="modal-dialog">
+    <div class="modal-header">
+      <h4 class="modal-title pull-left">Ingrese un nuevo grupo de indicadores</h4>
+      <button type="button" class="close pull-right" aria-label="Close" (click)="modalRef.hide()">
+        <span aria-hidden="true">&times;</span>
+      </button>
+    </div>
+    <div class="modal-body">
+      <app-indicator-group-form (updateEvent)="indicatorGroupAdded()" [modalRef]="modalRef"></app-indicator-group-form>
+    </div>
+  </div>
+</ng-template>

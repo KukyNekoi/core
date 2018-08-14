@@ -1,0 +1,101 @@
+<form #dateFilterForm="ngForm">
+  <div class="modal-body">
+      <table border="0">
+        <tr>
+          <td width="15%">Seleccione informe</td>
+          <td width="15%">Seleccione año</td>
+          <td width="15%">Seleccione periodo</td>
+          <td width="15%">{{setTitlePeriod}}</td>
+        </tr>
+        <tr>
+          <td width="15%">
+            <div>
+              <!--Dropdown tipo de informe-->
+              <div class="btn-group" dropdown>
+                <button type="button" dropdownToggle type="button" class="btn btn-sm btn-primary dropdown-toggle" data-toggle="dropdown"
+                  aria-haspopup="true" aria-expanded="false">
+                  {{ selectedReport }}
+                  <span class="caret"></span>
+                </button>
+                <ul class="dropdown-menu">
+                  <li>
+                    <a class="dropdown-item" (click)="selectReport('PDF')">PDF </a>
+                  </li>
+                  <li>
+                    <a class="dropdown-item" (click)="selectReport('XLSX')">XLSX </a>
+                  </li>
+                </ul>
+              </div>
+              <br>
+              <!--End Dropdown-->
+            </div>
+          </td>
+          <td width="15%">
+            <div>
+              <!--Dropdown Anual-->
+              <div class="btn-group" dropdown>
+                <button type="button" dropdownToggle type="button" class="btn btn-sm btn-primary dropdown-toggle" data-toggle="dropdown"
+                  aria-haspopup="true" aria-expanded="false">
+                  {{ selectedYearText }}
+                  <span class="caret"></span>
+                </button>
+                <ul class="dropdown-menu">
+                  <li *ngFor="let year of years">
+                    <a class="dropdown-item" (click)="selectYear(year)">{{ year }}</a>
+                  </li>
+                </ul>
+              </div>
+              <br>
+              <!--End Dropdown-->
+            </div>
+          </td>
+          <td width="15%">
+            <div>
+              <!--Dropdown Periodo-->
+              <div class="btn-group" dropdown>
+                <button type="button" dropdownToggle type="button" class="btn btn-sm btn-primary dropdown-toggle" data-toggle="dropdown"
+                  aria-haspopup="true" aria-expanded="false">
+                  {{ selectedPeriod }}
+                  <span class="caret"></span>
+                </button>
+                <ul class="dropdown-menu">
+                  <li>
+                  </li>
+                  <li *ngFor="let period of periods">
+                    <a class="dropdown-item" (click)="selectPeriod(period)">{{ period }}</a>
+                  </li>
+                </ul>
+              </div>
+              <br>
+              <!--End Dropdown-->
+            </div>
+          </td>
+          <td width="15%">
+            <div>
+              <!--Dropdown  trimestral, mensual, semanal-->
+              <div class="btn-group" dropdown>
+                <button type="button" dropdownToggle type="button" class="btn btn-sm btn-primary dropdown-toggle" data-toggle="dropdown"
+                  aria-haspopup="true" aria-expanded="false">
+                  {{ setContentDropdown }}
+                  <span class="caret"></span>
+                </button>
+                <ul class="dropdown-menu">
+                  <li *ngFor="let option of options">
+                    <a class="dropdown-item" (click)="setOptionContentDropdown(option)">{{ option }}</a>
+                  </li>
+                </ul>
+              </div>
+              <br>
+              <!--End Dropdown-->
+            </div>
+          </td>
+        </tr>
+      </table>
+    <!--Dropdown Year Filter-->
+  </div>
+  <div class="modal-footer">
+    <!--modal-footer needed, in other case, the button will be outside the modal-->
+    <button type="button" class="btn btn-sm btn-clean-2" (click)="hideModal()">Cancelar</button>
+    <button type="submit" class="btn btn-sm btn-primary" (click)="downloadReport()">Descargar</button>
+  </div>
+</form>

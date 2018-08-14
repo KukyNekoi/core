@@ -1,0 +1,32 @@
+<div class="row">
+  <div class="col-md-12">
+    <div style="align-content: center; height: 50vh;" *ngIf="indicator.registriesType == RegistryType.PercentRegistry">
+      <canvas baseChart 
+        [datasets]="DispersionChartData"
+        [labels]="lineChartLabels"
+        [options]="dispersionChartOptions"
+        [colors]="dispersionChartColors"
+        [legend]="lineChartLegend"
+        [chartType]="lineChartType">
+      </canvas>
+    </div>
+    <div style="align-content: center; height: 50vh;" *ngIf="indicator.registriesType != 2">
+      <canvas baseChart
+        [datasets]="lineChartData"
+        [labels]="lineChartLabels"
+        [options]="lineChartOptions"
+        [colors]="lineChartColors"
+        [legend]="lineChartLegend"
+        [chartType]="lineChartType">
+      </canvas>
+    </div>
+  </div>
+</div>
+<div class="container" *ngIf="indicator.registriesType == RegistryType.PercentRegistry">
+  <div class="row">
+    <div class="col-md-6">
+      <h4>Desviación estándar: {{devStandar}}</h4>
+      <h4>Varianza: {{varianza}}</h4>
+    </div>
+  </div>
+</div>
