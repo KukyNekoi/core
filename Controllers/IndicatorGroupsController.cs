@@ -108,7 +108,7 @@ namespace think_agro_metrics.Controllers
                 return BadRequest(ModelState);
             }
 
-            List<IndicatorGroup> indicatorGroups = await _context.IndicatorGroups.Where(ig => ig.Name == indicatorGroup.Name).ToListAsync();
+            List<IndicatorGroup> indicatorGroups = await _context.IndicatorGroups.Where(ig => ig.Name == indicatorGroup.Name && ig.IndicatorGroupID != id).ToListAsync();
 
             if (indicatorGroups.Any()) {
                 return NoContent();
@@ -154,7 +154,7 @@ namespace think_agro_metrics.Controllers
 
             foreach (IndicatorGroup ig in indicatorGroups)
             {
-                if (ig.Name.ToUpper().Trim().Equals(indicatorGroup.Name.ToUpper().Trim()))
+                if (ig.Name.ToUpper().Trim().Equals(indicatorGroup.Name.ToUpper().Trim()) && ig.IndicatorGroupID != indicatorGroup.IndicatorGroupID)
                 {
                     return Json(false);
                 }

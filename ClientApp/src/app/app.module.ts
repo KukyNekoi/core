@@ -48,7 +48,7 @@ import { LoaderComponent } from './components/loader/loader.component';
 import { LoaderService } from './services/loader/loader.service';
 import { LoaderInterceptor } from './shared/interceptors/loader-interceptor';
 import { TokenInterceptor } from './interceptors/TokenInterceptor';
-import { IndicatorGroupFormComponent } from './components/result-home/indicator-group-form/indicator-group-form.component';
+import { IndicatorGroupFormComponent } from './components/config-home/indicator-group-form/indicator-group-form.component';
 import { IndicatorFormComponent } from './components/indicator-home/indicator-form/indicator-form.component';
 import { PopoverModule} from 'ngx-bootstrap';
 import { AddDocumentFormComponent } from './components/registry-form/add-document-form/add-document-form.component';

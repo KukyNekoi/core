@@ -30,7 +30,7 @@ namespace think_agro_metrics.Controllers
 
         // GET: api/Roles
         [HttpGet]
-        [Authorize(Roles = "administrador_indicadores,gerencia_y_dirección,gestor_operaciones,analista_operaciones,ejecutivo_post-venta,encargado_nuevos_negocios,ejecutivo_técnico_de_control_y_seguimiento,extensionista,extensionista_junior,gestor_contenido")]
+        // [Authorize(Roles = "administrador_indicadores,gerencia_y_dirección,gestor_operaciones,analista_operaciones,ejecutivo_post-venta,encargado_nuevos_negocios,ejecutivo_técnico_de_control_y_seguimiento,extensionista,extensionista_junior,gestor_contenido")]
         public async Task<IActionResult> GetRoles()
         {
             var roles = await _context.Roles.ToListAsync();

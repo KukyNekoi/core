@@ -1241,7 +1241,7 @@ namespace think_agro_metrics.Controllers
 
             foreach(Indicator i in indicators)
             {
-                if (i.Name.ToUpper().Trim().Equals(indicator.Name.ToUpper().Trim()))
+                if (i.Name.ToUpper().Trim().Equals(indicator.Name.ToUpper().Trim()) && i.IndicatorID != indicator.IndicatorID)
                 {
                     return Json(false);
                 }

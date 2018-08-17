@@ -13,7 +13,7 @@
           <li><a class="active" href="/">Inicio</a></li>
           <li [class.hidden]="!isLogged || !isAdminOrManager"> <a (click)="openModalReport(generator)"  href="javascript:void(0)" onclick="return false;">Generar Informe</a></li> <!-- Yo lo puse-->
           <li [class.hidden]="!isLogged || !isAdminOrManager" ><a  (click)="goToConfigPage()" >Configuración</a></li>
-          <li [class.hidden]="isLogged" ><a (click)="openModal(template)" href="javascript:void(0)"  >Iniciar Sesión</a></li>
+          <li [class.hidden]="isLogged" ><a (click)="openModal(login)" href="javascript:void(0)"  >Iniciar Sesión</a></li>
           <li [class.hidden]="!isLogged" ><a (click)="logOut()" href="javascript:void(0)"  >Cerrar Sesión</a></li>
       </ul>
 
@@ -31,21 +31,44 @@
         </div>
       </ng-template>
 
-      <ng-template #template>
-        <div class="modal-header">
-          <h4 class="modal-title pull-left">Iniciar Sesión</h4>
-          <button type="button" class="close pull-right" aria-label="Close" (click)="modalRef.hide()">
-            <span aria-hidden="true">&times;</span>
-          </button>
-        </div>
-        <div class="modal-body">
-          <input class="cred" (keyup.enter)="authorize()" [(ngModel)]="email" type="email" name="email" minLength="4" required placeholder="email">
-          <br>
-          <input class="cred" (keyup.enter)="authorize()" [(ngModel)]="password" type="password" name="password" minLength="4" required placeholder="contraseña">
-          <br>
-          <button type="button" (click)="authorize()" class="btn cred2 btn-primary"> Ingresar </button>
-        </div>
-      </ng-template>
-    </div> <!-- end navbar-collapse -->
-  </div>
-</nav>
+    <!--Sesion-->
+    <ng-template #login>
+        <div class="modal-header " tabindex="-1">
+            <div class="modal-title pull-left">
+              <i _ngcontent-c3="" class="glyphicon glyphicon-user"></i>
+              &nbsp;
+              Iniciar Sesión
+            </div>
+            <button type="button" class="close pull-right" aria-label="Close" (click)="modalRef.hide()">
+              <span aria-hidden="true">&times;</span>
+            </button>
+          </div>
+      <div class="modal-body">
+          <div class="row">
+              <div class="col-xs-12 col-sm-12 col-md-12">
+                  <img src="/assets/images/thinkagro.png" style="width: 100px;" class="center">
+              </div>
+              <div class="pad-bt-60"></div>
+
+              <div class="form-group col-sm-12 col-md-12">
+                <label>Email</label>
+                <input type="email" placeholder="Email" (keyup.enter)="authorize()" [(ngModel)]="email" class="form-control" name="email" minLenght="4" required />
+            </div>
+              <div class="form-group col-sm-12 col-md-12">
+                <label>Contraseña</label>
+                <input type="password" placeholder="******" class="form-control" id="name" required minLenght="4" name="password" (keyup.enter)="authorize()" [(ngModel)]="password" />
+              </div>
+              <!--
+              <div class="form-group col-sm-12 col-md-12">
+                <p class="text-center">¿Olvidó su Contraseña? Contacte a un Administrador</p>
+              </div>
+	      -->
+          </div>        
+      </div>
+
+      <div class="modal-footer"> <!--modal-footer needed, in other case, the button will be outside the modal-->
+        <!--button type="submit" class="btn btn-success pull-right" [disabled]="!addRegistryForm.form.valid"><i class="glyphicon glyphicon-ok"></i> Agregar Registro</button-->
+        <button type="button" class="btn btn-sm btn-clean-2" (click)="modalRef.hide()">Cancelar</button>
+        <button type="button" (click)="authorize()" class="btn cred2 btn-sm btn-primary">Aceptar</button>
+      </div>
+    </ng-template>

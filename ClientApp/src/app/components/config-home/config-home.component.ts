@@ -12,6 +12,9 @@ import { RegistryType } from '../../shared/models/registryType';
 import { IndicatorService } from '../../services/indicator/indicator.service';
 import { IndicatorGroupService } from '../../services/indicator-group/indicator-group.service';
 import { NotificationService } from '../../services/alerts/notification.service';
+import { AuthService } from '../../services/auth/AuthService';
+
+import { RolesType } from '../../shared/models/rolesType';
 
 import swal from 'sweetalert2';
 
@@ -25,6 +28,9 @@ export class ConfigHomeComponent implements OnInit {
 
   indicatorsGroups$: Observable<IndicatorGroup[]>;
   public editIndicatorGroupModalRef: BsModalRef;
+  public addIndicatorGroupModalRef: BsModalRef;
+  public addIndicatorModalRef: BsModalRef;
+  public idIndicatorGroup: number;
 
   public selectedIndicatorGroup: IndicatorGroup;
 
@@ -33,7 +39,8 @@ export class ConfigHomeComponent implements OnInit {
   constructor(private indicatorService: IndicatorService,
               private indicatorGroupService: IndicatorGroupService,
               private notificationService: NotificationService,
-              private modalService: BsModalService) { }
+              private modalService: BsModalService,
+              private authService: AuthService) { }
 
   ngOnInit() {
     this.indicatorsGroups$ = this.indicatorGroupService.getIndicatorGroups();
@@ -127,6 +134,23 @@ export class ConfigHomeComponent implements OnInit {
       allowOutsideClick: false,
       allowEscapeKey: false
     });
+  }
+
+  get isAdminOrManager(): boolean {
+    const token = this.authService.getRole();
+    if (token !== undefined && token !== null) {
+      return token.roleToken === RolesType['adm'] || token.roleToken === RolesType['ger'];
+    }
+    return false;
+  }
+
+  openModal(template: TemplateRef<any>) {
+    this.addIndicatorGroupModalRef = this.modalService.show(template);
+  }
+
+  openModalIndicator(template: TemplateRef<any>, idIndicatorGroup: number) {
+    this.idIndicatorGroup = idIndicatorGroup;
+    this.addIndicatorModalRef = this.modalService.show(template);
   }
 
 }

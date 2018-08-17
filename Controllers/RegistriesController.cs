@@ -189,7 +189,7 @@ namespace think_agro_metrics.Controllers
                 return BadRequest(ModelState);
             }
 
-            var registries = await _context.Registries.Where(r => r.IndicatorID == indicator && r.Name == registry.Name).ToListAsync();
+            var registries = await _context.Registries.Where(r => r.IndicatorID == indicator && r.Name == registry.Name && r.RegistryID != id).ToListAsync();
 
             if (registries.Any())
             {
@@ -233,7 +233,7 @@ namespace think_agro_metrics.Controllers
                 return BadRequest(ModelState);
             }
 
-            var registries = await _context.Registries.Where(r => r.IndicatorID == indicator && r.Name == registry.Name).ToListAsync();
+            var registries = await _context.Registries.Where(r => r.IndicatorID == indicator && r.Name == registry.Name && r.RegistryID != id).ToListAsync();
 
             if (registries.Any())
             {
@@ -276,7 +276,7 @@ namespace think_agro_metrics.Controllers
                 return BadRequest(ModelState);
             }
 
-            var registries = await _context.Registries.Where(r => r.IndicatorID == indicator && r.Name == registry.Name).ToListAsync();
+            var registries = await _context.Registries.Where(r => r.IndicatorID == indicator && r.Name == registry.Name && r.RegistryID != id).ToListAsync();
 
             if (registries.Any())
             {
@@ -325,7 +325,7 @@ namespace think_agro_metrics.Controllers
             foreach (Registry r in registries)
             {
                 
-                if (r.Name.ToUpper().Trim().Equals(registry.Name.ToUpper().Trim()))
+                if (r.Name.ToUpper().Trim().Equals(registry.Name.ToUpper().Trim()) && r.RegistryID != indicatorId)
                 {
                     return NoContent();
                 }
@@ -377,7 +377,7 @@ namespace think_agro_metrics.Controllers
             foreach (Registry r in registries)
             {
 
-                if (r.Name.ToUpper().Trim().Equals(registry.Name.ToUpper().Trim()))
+                if (r.Name.ToUpper().Trim().Equals(registry.Name.ToUpper().Trim()) && r.RegistryID != indicatorId)
                 {
                     return NoContent();
                 }
@@ -424,7 +424,7 @@ namespace think_agro_metrics.Controllers
             foreach (Registry r in registries)
             {
 
-                if (r.Name.ToUpper().Trim().Equals(registry.Name.ToUpper().Trim()))
+                if (r.Name.ToUpper().Trim().Equals(registry.Name.ToUpper().Trim()) && r.RegistryID != indicatorId)
                 {
                     return NoContent();
                 }

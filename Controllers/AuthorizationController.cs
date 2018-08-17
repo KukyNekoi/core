@@ -28,6 +28,7 @@ namespace think_agro_metrics.Controllers
         private IConfiguration _config;
 
         public class Role{
+            public String role_id;
             public String role_name;
             public List<String> read;
             public List<String> write;
@@ -129,7 +130,7 @@ namespace think_agro_metrics.Controllers
                 {
                     string json = r.ReadToEnd();
                     List<Role> roles = new List<Role>(JsonConvert.DeserializeObject<List<Role>>(json));
-                    Role subject = roles.Find(role => role.role_name == userRole.Resultado.Nombre);
+                    Role subject = roles.Find(role => role.role_id == userRole.Resultado.Id);
                     if(subject != null) 
                     {
                         foreach (string permission in subject.write){

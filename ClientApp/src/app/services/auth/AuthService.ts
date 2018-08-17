@@ -14,12 +14,13 @@ export interface Credentials {
 
 @Injectable()
 export class AuthService {
-  constructor(private http: HttpClient, private router: Router, private notifications: NotificationService) {}
+  constructor(private http: HttpClient, private router: Router, private notifications: NotificationService) {
+  }
 
   private static AUTHORIZATION_API = '/api/auth/';
   private static ROLE_API = '/api/Roles/';
   private self_token = null;
-  private role: Role;
+  private role: Role = null;
 
   public auth(credentials: Credentials): Observable<boolean> {
     return Observable.create(observer => {
@@ -51,8 +52,6 @@ export class AuthService {
   }
 
   private loadRole() {
-    // let reads: Indicator[];
-    // Load Role
     this.http.get<Role>(AuthService.ROLE_API + (this.getUser() as User).role_ids).subscribe(data => {
       this.role = data;
     });
@@ -107,11 +106,24 @@ export class AuthService {
   }
 
   public getRole(): Role {
-     const user = this.getUser();
-     if(typeof user !== 'boolean'){
-       return this.role;
-     }
-     return  new Role(0, 'default', 'b940f018-288a-4fc0-822c-66719353aa1b');
+    if (this.role === null) { // If load ins't loaded...
+      // Load role
+      this.http.get<Role>(AuthService.ROLE_API + (this.getUser() as User).role_ids).subscribe(data => {
+        this.role = data;
+      },
+        error => { // If cannot obtain the role, close the session
+          this.signOut();
+          localStorage.setItem('token', null);
+          this.router.navigate(['/welcome']);
+          this.self_token = null;
+          this.notifications.showToaster('La sesión se ha cerrado', 'error');
+        },
+        () => { // Returns on subscribe completed
+          return this.role;
+        });
+    } else {
+      return this.role;
+    }
   }
 
   public getUser(): User | boolean {
