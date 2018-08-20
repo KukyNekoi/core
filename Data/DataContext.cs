@@ -47,11 +47,8 @@ namespace think_agro_metrics.Data
 		else{
 			connection += "think_agro_metrics;";
 		}
-		if(user != null){
+		if(user != null && password != null){
 			connection += "User=" + user + ";";
-		}
-		if(password != null)
-		{
 			connection += "Password=" + password + ";";
 		}
 		connection += "MultipleActiveResultSets=True;";
