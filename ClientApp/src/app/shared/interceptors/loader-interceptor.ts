@@ -2,7 +2,7 @@
 // ...
 import 'rxjs/add/operator/do';
 import { HttpInterceptor, HttpRequest, HttpHandler, HttpEvent, HttpResponse, HttpErrorResponse } from '@angular/common/http';
-import { Observable } from 'rxjs';
+import { Observable } from 'rxjs/Observable';
 import { LoaderService } from '../../services/loader/loader.service';
 import { Injectable } from '@angular/core';
 
@@ -30,7 +30,7 @@ export class LoaderInterceptor implements HttpInterceptor {
           // Not allowed
           this.loader.pop(request.url);
         }
-        if (err.status === 500){
+        if (err.status === 500) {
         // internal server error
           this.loader.pop(request.url);
         }

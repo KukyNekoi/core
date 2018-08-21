@@ -128,13 +128,12 @@ export class RegistryFormComponent implements OnInit {
     });
 
     this.fileList.forEach(element => {
-      this.registryService.addFileDocument(element, this.model.registryID).subscribe(event => {
-        if (event.type === HttpEventType.UploadProgress) {
-          // this.progress = Math.round(100 * event.loaded / event.total);
-          // console.log();
-        } else if (event.type === HttpEventType.Response) {
-          this.model.documents.push(new Document().fromJSON(event.body));
-        }
+      this.registryService.addFileDocument(element, this.model.registryID).subscribe(data => {
+        // console.log(data);
+      if (data.type === HttpEventType.Response){
+        console.log(data.body)
+        this.model.documents.push(new Document().fromJSON(data.body)); 
+      }
       });
     });
   }

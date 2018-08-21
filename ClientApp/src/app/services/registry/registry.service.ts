@@ -42,8 +42,8 @@ export class RegistryService {
       formData.append(file.name, file);
     const request = new HttpRequest('POST', RegistryService.REGISTRIES_API + registryId
      + RegistryService.ADD_FILE_DOCUMENT_METHOD, formData, {
-      reportProgress: true,
-    });
+      reportProgress: false,
+      });
     return this.http.request(request);
   }
 

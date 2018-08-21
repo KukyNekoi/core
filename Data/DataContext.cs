@@ -19,6 +19,7 @@ namespace think_agro_metrics.Data
         public DbSet<Goal> Goals { get; set; }
         public DbSet<Role> Roles { get; set; }
         public DbSet<Permission> Permissions { get; set; }
+        public DbSet<RefreshToken> RefreshTokens { get; set; }
 
         public DataContext() : base()
         {
@@ -85,6 +86,8 @@ namespace think_agro_metrics.Data
             modelBuilder.Entity<QuantityRegistry>();
             modelBuilder.Entity<PercentRegistry>();
             modelBuilder.Entity<ExternalRegistry>();
+
+            modelBuilder.Entity<RefreshToken>();
         }
 
     }
