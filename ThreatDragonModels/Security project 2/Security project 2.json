@@ -26,16 +26,27 @@
               "angle": 0,
               "id": "f61ec6c4-152a-4ef0-a057-aa9c1c380814",
               "z": 2,
-              "hasOpenThreats": false,
+              "hasOpenThreats": true,
+              "threats": [
+                {
+                  "ruleId": "b2a6d40d-d3f8-4750-8e4d-c02cc84b13dc",
+                  "title": "3rd party intervention",
+                  "type": "Tampering",
+                  "status": "Open",
+                  "severity": "Medium",
+                  "description": "A malicious plugin can alter data on the angular2 app",
+                  "mitigation": "Whilst not common, there is nothing that we can do apart from educating the user"
+                }
+              ],
               "attrs": {
                 ".element-shape": {
-                  "class": "element-shape hasNoOpenThreats isInScope"
+                  "class": "element-shape hasOpenThreats isInScope"
                 },
                 "text": {
                   "text": "Browser"
                 },
                 ".element-text": {
-                  "class": "element-text hasNoOpenThreats isInScope"
+                  "class": "element-text hasOpenThreats isInScope"
                 }
               }
             },
@@ -185,7 +196,7 @@
                 }
               ],
               "z": 8,
-              "hasOpenThreats": false,
+              "hasOpenThreats": true,
               "isPublicNetwork": true,
               "isEncrypted": true,
               "protocol": "https",
@@ -198,14 +209,22 @@
                   "severity": "Medium",
                   "description": "A generic DoS threat",
                   "mitigation": "Ensure that enough resources are available"
+                },
+                {
+                  "status": "Open",
+                  "severity": "Medium",
+                  "title": "Side attack payload",
+                  "type": "Tampering",
+                  "description": "A crafted zero day can be sent through this way to the web server",
+                  "mitigation": "None"
                 }
               ],
               "attrs": {
                 ".marker-target": {
-                  "class": "marker-target hasNoOpenThreats isInScope"
+                  "class": "marker-target hasOpenThreats isInScope"
                 },
                 ".connection": {
-                  "class": "connection hasNoOpenThreats isInScope"
+                  "class": "connection hasOpenThreats isInScope"
                 }
               }
             },
@@ -242,8 +261,8 @@
                 "height": 100
               },
               "position": {
-                "x": 440,
-                "y": 350
+                "x": 334,
+                "y": 316
               },
               "angle": 0,
               "id": "2be9870b-c731-4570-9206-d1403eae39cf",
@@ -309,7 +328,12 @@
               "target": {
                 "id": "2be9870b-c731-4570-9206-d1403eae39cf"
               },
-              "vertices": [],
+              "vertices": [
+                {
+                  "x": 619,
+                  "y": 441
+                }
+              ],
               "id": "9961564a-fa94-4fd7-be05-1bcd1200e0dd",
               "labels": [
                 {
@@ -324,15 +348,35 @@
                 }
               ],
               "z": 12,
-              "hasOpenThreats": false,
+              "hasOpenThreats": true,
               "isEncrypted": true,
               "protocol": "https",
+              "threats": [
+                {
+                  "ruleId": "4adaa48a-0345-4533-a189-64c98c4420dd",
+                  "title": "Crafted payload",
+                  "type": "Tampering",
+                  "status": "Open",
+                  "severity": "High",
+                  "description": "A malicious task can be generated via a exploited webserver",
+                  "mitigation": "Harden the web server"
+                },
+                {
+                  "ruleId": "13000296-b17d-4b72-9cc4-f5cc33f80e4c",
+                  "title": "Crafted task",
+                  "type": "Information disclosure",
+                  "status": "Mitigated",
+                  "severity": "High",
+                  "description": "A crafted task can be used to disclosure information",
+                  "mitigation": "Prevent task crafting via static definitions"
+                }
+              ],
               "attrs": {
                 ".marker-target": {
-                  "class": "marker-target hasNoOpenThreats isInScope"
+                  "class": "marker-target hasOpenThreats isInScope"
                 },
                 ".connection": {
-                  "class": "connection hasNoOpenThreats isInScope"
+                  "class": "connection hasOpenThreats isInScope"
                 }
               }
             },
@@ -487,17 +531,21 @@
                 "y": 260
               },
               "target": {
-                "x": 480,
-                "y": 570
+                "x": 77,
+                "y": 372
               },
               "vertices": [
                 {
-                  "x": 340,
-                  "y": 370
+                  "x": 441,
+                  "y": 281
                 },
                 {
-                  "x": 440,
-                  "y": 480
+                  "x": 503,
+                  "y": 433
+                },
+                {
+                  "x": 246,
+                  "y": 407
                 }
               ],
               "id": "72888017-cd0c-493f-98c3-d44c810f08b6",
@@ -702,7 +750,7 @@
                 }
               ],
               "z": 27,
-              "hasOpenThreats": false,
+              "hasOpenThreats": true,
               "isEncrypted": true,
               "isPublicNetwork": true,
               "threats": [
@@ -714,14 +762,22 @@
                   "severity": "High",
                   "description": "A generic tampering threat",
                   "mitigation": "Force HTTPS/2 connections"
+                },
+                {
+                  "status": "Open",
+                  "severity": "Medium",
+                  "title": "Web server exploiting",
+                  "type": "Information disclosure",
+                  "description": "This webserver connection can be exploited to extract information from it",
+                  "mitigation": "keep the packages updated and check its health"
                 }
               ],
               "attrs": {
                 ".marker-target": {
-                  "class": "marker-target hasNoOpenThreats isInScope"
+                  "class": "marker-target hasOpenThreats isInScope"
                 },
                 ".connection": {
-                  "class": "connection hasNoOpenThreats isInScope"
+                  "class": "connection hasOpenThreats isInScope"
                 }
               }
             },
@@ -827,11 +883,57 @@
                   "class": "connection hasOpenThreats isInScope"
                 }
               }
+            },
+            {
+              "type": "tm.Boundary",
+              "smooth": true,
+              "source": {
+                "x": 1179,
+                "y": 455
+              },
+              "target": {
+                "x": 393,
+                "y": 622
+              },
+              "vertices": [
+                {
+                  "x": 815,
+                  "y": 386
+                },
+                {
+                  "x": 457,
+                  "y": 500
+                }
+              ],
+              "id": "da996200-4209-4316-86f6-4777a709714d",
+              "z": 30,
+              "attrs": {}
+            },
+            {
+              "type": "tm.Boundary",
+              "smooth": true,
+              "source": {
+                "x": 50,
+                "y": 422
+              },
+              "target": {
+                "x": 299,
+                "y": 598
+              },
+              "vertices": [
+                {
+                  "x": 316,
+                  "y": 459
+                }
+              ],
+              "id": "28b8e5cc-6628-4a35-9527-049725402335",
+              "z": 31,
+              "attrs": {}
             }
           ]
         },
         "size": {
-          "height": 730,
+          "height": 745.5180053710938,
           "width": 1260
         }
       }
