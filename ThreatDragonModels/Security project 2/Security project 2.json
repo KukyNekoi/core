@@ -104,23 +104,51 @@
                 "height": 100
               },
               "position": {
-                "x": 800,
-                "y": 350
+                "x": 870,
+                "y": 500
               },
               "angle": 0,
               "id": "ed5cf44c-601a-4be3-8ade-1eac92184289",
               "z": 5,
-              "hasOpenThreats": false,
+              "hasOpenThreats": true,
               "privilegeLevel": "context=Docker",
+              "threats": [
+                {
+                  "ruleId": "4adaa48a-0345-4533-a189-64c98c4420dd",
+                  "title": "Self tampering",
+                  "type": "Tampering",
+                  "status": "Open",
+                  "severity": "Medium",
+                  "description": "The program can tamper itself due to bad programming"
+                },
+                {
+                  "ruleId": "87bc37e2-798e-4d68-bb96-feb1da26da48",
+                  "title": "Generic repudiation threat",
+                  "type": "Repudiation",
+                  "status": "Mitigated",
+                  "severity": "High",
+                  "description": "A generic repudiation threat",
+                  "mitigation": "Ensure that critical operations are treated like transactions"
+                },
+                {
+                  "ruleId": "c1377855-ea20-4c97-8861-f95c364fb8d2",
+                  "title": "Generic elevation threat",
+                  "type": "Elevation of privilege",
+                  "status": "Mitigated",
+                  "severity": "High",
+                  "description": "A generic elevation threat",
+                  "mitigation": "Ensure that no commands are directly executed"
+                }
+              ],
               "attrs": {
                 ".element-shape": {
-                  "class": "element-shape hasNoOpenThreats isInScope"
+                  "class": "element-shape hasOpenThreats isInScope"
                 },
                 "text": {
                   "text": "web\napplication"
                 },
                 ".element-text": {
-                  "class": "element-text hasNoOpenThreats isInScope"
+                  "class": "element-text hasOpenThreats isInScope"
                 }
               }
             },
@@ -143,10 +171,13 @@
               "id": "5c3f6ca4-09e7-470e-9ea0-9971d0862804",
               "labels": [
                 {
-                  "position": 0.5,
+                  "position": {
+                    "distance": 0.4131528040591258,
+                    "offset": -49.34407429175996
+                  },
                   "attrs": {
                     "text": {
-                      "text": "Web Response",
+                      "text": "Web Request",
                       "font-weight": "400",
                       "font-size": "small"
                     }
@@ -158,6 +189,17 @@
               "isPublicNetwork": true,
               "isEncrypted": true,
               "protocol": "https",
+              "threats": [
+                {
+                  "ruleId": "edb05d76-a695-455f-947b-7d67b78bc31d",
+                  "title": "DoS",
+                  "type": "Denial of service",
+                  "status": "Mitigated",
+                  "severity": "Medium",
+                  "description": "A generic DoS threat",
+                  "mitigation": "Ensure that enough resources are available"
+                }
+              ],
               "attrs": {
                 ".marker-target": {
                   "class": "marker-target hasNoOpenThreats isInScope"
@@ -174,8 +216,8 @@
                 "height": 80
               },
               "position": {
-                "x": 1080,
-                "y": 470
+                "x": 640,
+                "y": 290
               },
               "angle": 0,
               "id": "6ec5aeb4-7977-4201-9296-24d7da35066b",
@@ -200,23 +242,61 @@
                 "height": 100
               },
               "position": {
-                "x": 410,
-                "y": 250
+                "x": 440,
+                "y": 350
               },
               "angle": 0,
               "id": "2be9870b-c731-4570-9206-d1403eae39cf",
               "z": 11,
-              "hasOpenThreats": false,
+              "hasOpenThreats": true,
               "privilegeLevel": "context=Docker",
+              "threats": [
+                {
+                  "ruleId": "4adaa48a-0345-4533-a189-64c98c4420dd",
+                  "title": "Coliding tasks",
+                  "type": "Tampering",
+                  "status": "Open",
+                  "severity": "Medium",
+                  "description": "Tasks enqueued but not dequeued",
+                  "mitigation": "Treat task definitions as singleton instances, queue up on the reference"
+                },
+                {
+                  "ruleId": "13000296-b17d-4b72-9cc4-f5cc33f80e4c",
+                  "title": "Mistreated error",
+                  "type": "Repudiation",
+                  "status": "Open",
+                  "severity": "Medium",
+                  "description": "Mistreated error not propagated through the network",
+                  "mitigation": "Enqueue status periodically"
+                },
+                {
+                  "ruleId": "edb05d76-a695-455f-947b-7d67b78bc31d",
+                  "title": "Generic DoS threat",
+                  "type": "Denial of service",
+                  "status": "Mitigated",
+                  "severity": "Medium",
+                  "description": "Too many task can absorb all resources",
+                  "mitigation": "Limit container consumptions for single instances"
+                },
+                {
+                  "ruleId": "c1377855-ea20-4c97-8861-f95c364fb8d2",
+                  "title": "Generic elevation threat",
+                  "type": "Elevation of privilege",
+                  "status": "Mitigated",
+                  "severity": "High",
+                  "description": "A generic elevation threat",
+                  "mitigation": "Ensure that no task can run outside userspace"
+                }
+              ],
               "attrs": {
                 ".element-shape": {
-                  "class": "element-shape hasNoOpenThreats isInScope"
+                  "class": "element-shape hasOpenThreats isInScope"
                 },
                 "text": {
                   "text": "Background\nTask Queue"
                 },
                 ".element-text": {
-                  "class": "element-text hasNoOpenThreats isInScope"
+                  "class": "element-text hasOpenThreats isInScope"
                 }
               }
             },
@@ -267,14 +347,17 @@
               },
               "vertices": [
                 {
-                  "x": 570,
+                  "x": 520,
                   "y": 200
                 }
               ],
               "id": "08ed8d1d-66b2-4adb-98dc-f70d713b8b91",
               "labels": [
                 {
-                  "position": 0.5,
+                  "position": {
+                    "distance": 0.3381852397551113,
+                    "offset": 36.75094952392022
+                  },
                   "attrs": {
                     "text": {
                       "text": "logs task",
@@ -307,8 +390,8 @@
               },
               "vertices": [
                 {
-                  "x": 980,
-                  "y": 510
+                  "x": 810,
+                  "y": 420
                 }
               ],
               "id": "c645ecd0-669b-4aca-b7e8-8c0ad95b846f",
@@ -363,16 +446,36 @@
                 }
               ],
               "z": 18,
-              "hasOpenThreats": false,
+              "hasOpenThreats": true,
               "protocol": "https",
               "isEncrypted": true,
               "isPublicNetwork": true,
+              "threats": [
+                {
+                  "ruleId": "13000296-b17d-4b72-9cc4-f5cc33f80e4c",
+                  "title": "Generic informtion disclosure threat",
+                  "type": "Information disclosure",
+                  "status": "Mitigated",
+                  "severity": "High",
+                  "description": "A generic information disclosure threat that can be caused by a MitM",
+                  "mitigation": "Ensure that communication is encrypted at all times"
+                },
+                {
+                  "ruleId": "edb05d76-a695-455f-947b-7d67b78bc31d",
+                  "title": "Generic DoS threat",
+                  "type": "Denial of service",
+                  "status": "Open",
+                  "severity": "Medium",
+                  "description": "A generic DoS threat caused by an abuse of the API due to the free plan",
+                  "mitigation": "Limit the number of API calls"
+                }
+              ],
               "attrs": {
                 ".marker-target": {
-                  "class": "marker-target hasNoOpenThreats isInScope"
+                  "class": "marker-target hasOpenThreats isInScope"
                 },
                 ".connection": {
-                  "class": "connection hasNoOpenThreats isInScope"
+                  "class": "connection hasOpenThreats isInScope"
                 }
               }
             },
@@ -380,8 +483,8 @@
               "type": "tm.Boundary",
               "smooth": true,
               "source": {
-                "x": 270,
-                "y": 270
+                "x": 160,
+                "y": 260
               },
               "target": {
                 "x": 480,
@@ -389,60 +492,17 @@
               },
               "vertices": [
                 {
-                  "x": 360,
-                  "y": 500
+                  "x": 340,
+                  "y": 370
                 },
                 {
-                  "x": 410,
-                  "y": 560
+                  "x": 440,
+                  "y": 480
                 }
               ],
               "id": "72888017-cd0c-493f-98c3-d44c810f08b6",
               "z": 20,
               "attrs": {}
-            },
-            {
-              "type": "tm.Flow",
-              "smooth": true,
-              "source": {
-                "id": "ed5cf44c-601a-4be3-8ade-1eac92184289"
-              },
-              "target": {
-                "id": "9690fea3-ddd6-40ec-af0f-3f01d6e20f38"
-              },
-              "vertices": [
-                {
-                  "x": 820,
-                  "y": 350
-                },
-                {
-                  "x": 710,
-                  "y": 190
-                }
-              ],
-              "id": "1f30aa2f-0e4c-41f5-8748-e324328a23ed",
-              "labels": [
-                {
-                  "position": 0.5,
-                  "attrs": {
-                    "text": {
-                      "text": "Queries",
-                      "font-weight": "400",
-                      "font-size": "small"
-                    }
-                  }
-                }
-              ],
-              "z": 21,
-              "hasOpenThreats": false,
-              "attrs": {
-                ".marker-target": {
-                  "class": "marker-target hasNoOpenThreats isInScope"
-                },
-                ".connection": {
-                  "class": "connection hasNoOpenThreats isInScope"
-                }
-              }
             },
             {
               "type": "tm.Flow",
@@ -511,6 +571,17 @@
               "isEncrypted": true,
               "protocol": "https",
               "isPublicNetwork": true,
+              "threats": [
+                {
+                  "ruleId": "13000296-b17d-4b72-9cc4-f5cc33f80e4c",
+                  "title": "Discosure by transport protocol",
+                  "type": "Information disclosure",
+                  "status": "Mitigated",
+                  "severity": "High",
+                  "description": "using insecure protocols can disclosure information",
+                  "mitigation": "Force HTTPS/2"
+                }
+              ],
               "attrs": {
                 ".marker-target": {
                   "class": "marker-target hasNoOpenThreats isInScope"
@@ -529,11 +600,19 @@
               "target": {
                 "id": "2be9870b-c731-4570-9206-d1403eae39cf"
               },
-              "vertices": [],
+              "vertices": [
+                {
+                  "x": 460,
+                  "y": 220
+                }
+              ],
               "id": "c5ab6273-482f-4805-acdb-7e73472c5fde",
               "labels": [
                 {
-                  "position": 0.5,
+                  "position": {
+                    "distance": 0.440921455798189,
+                    "offset": 52.84021211483764
+                  },
                   "attrs": {
                     "text": {
                       "text": "retrieves tasks",
@@ -559,14 +638,18 @@
               "type": "tm.Boundary",
               "smooth": true,
               "source": {
-                "x": 370,
-                "y": 220
+                "x": 230,
+                "y": 170
               },
               "target": {
                 "x": 900,
                 "y": 2
               },
               "vertices": [
+                {
+                  "x": 480,
+                  "y": 250
+                },
                 {
                   "x": 730,
                   "y": 210
@@ -591,6 +674,159 @@
               "id": "dc4cf925-5104-4cae-bc06-e394268e3f26",
               "z": 26,
               "attrs": {}
+            },
+            {
+              "type": "tm.Flow",
+              "smooth": true,
+              "source": {
+                "id": "ed5cf44c-601a-4be3-8ade-1eac92184289"
+              },
+              "target": {
+                "id": "f61ec6c4-152a-4ef0-a057-aa9c1c380814"
+              },
+              "vertices": [],
+              "id": "809872ef-f92f-423a-9a48-7051ca91d22c",
+              "labels": [
+                {
+                  "position": {
+                    "distance": 0.594249345949779,
+                    "offset": -41.84154518566204
+                  },
+                  "attrs": {
+                    "text": {
+                      "text": "Web request\nresponse",
+                      "font-weight": "400",
+                      "font-size": "small"
+                    }
+                  }
+                }
+              ],
+              "z": 27,
+              "hasOpenThreats": false,
+              "isEncrypted": true,
+              "isPublicNetwork": true,
+              "threats": [
+                {
+                  "ruleId": "4adaa48a-0345-4533-a189-64c98c4420dd",
+                  "title": "Connection should use HTTPS",
+                  "type": "Information disclosure",
+                  "status": "Mitigated",
+                  "severity": "High",
+                  "description": "A generic tampering threat",
+                  "mitigation": "Force HTTPS/2 connections"
+                }
+              ],
+              "attrs": {
+                ".marker-target": {
+                  "class": "marker-target hasNoOpenThreats isInScope"
+                },
+                ".connection": {
+                  "class": "connection hasNoOpenThreats isInScope"
+                }
+              }
+            },
+            {
+              "type": "tm.Flow",
+              "smooth": true,
+              "source": {
+                "id": "9690fea3-ddd6-40ec-af0f-3f01d6e20f38"
+              },
+              "target": {
+                "id": "6ec5aeb4-7977-4201-9296-24d7da35066b"
+              },
+              "vertices": [
+                {
+                  "x": 600,
+                  "y": 180
+                }
+              ],
+              "id": "70eb9d42-b7ef-4924-b077-a80fc910d08a",
+              "labels": [
+                {
+                  "position": 0.5,
+                  "attrs": {
+                    "text": {
+                      "text": "Get environment",
+                      "font-weight": "400",
+                      "font-size": "small"
+                    }
+                  }
+                }
+              ],
+              "z": 28,
+              "hasOpenThreats": false,
+              "isEncrypted": true,
+              "outOfScope": true,
+              "reasonOutOfScope": "Docker environment",
+              "attrs": {
+                ".marker-target": {
+                  "class": "marker-target hasNoOpenThreats isInScope"
+                },
+                ".connection": {
+                  "class": "connection hasNoOpenThreats isOutOfScope"
+                }
+              }
+            },
+            {
+              "type": "tm.Flow",
+              "smooth": true,
+              "source": {
+                "id": "ed5cf44c-601a-4be3-8ade-1eac92184289"
+              },
+              "target": {
+                "id": "9690fea3-ddd6-40ec-af0f-3f01d6e20f38"
+              },
+              "vertices": [
+                {
+                  "x": 610,
+                  "y": 350
+                }
+              ],
+              "id": "0e15ae3a-3fb1-42dc-a340-8e09572dc7a7",
+              "labels": [
+                {
+                  "position": {
+                    "distance": 0.31481637801440343,
+                    "offset": 18.44925864850814
+                  },
+                  "attrs": {
+                    "text": {
+                      "text": "Queries",
+                      "font-weight": "400",
+                      "font-size": "small"
+                    }
+                  }
+                }
+              ],
+              "z": 29,
+              "hasOpenThreats": true,
+              "threats": [
+                {
+                  "ruleId": "13000296-b17d-4b72-9cc4-f5cc33f80e4c",
+                  "title": "Generic informtion disclosure threat",
+                  "type": "Information disclosure",
+                  "status": "Mitigated",
+                  "severity": "High",
+                  "description": "A generic information disclosure threat due to a crafted SQL injection",
+                  "mitigation": "cleanse queries"
+                },
+                {
+                  "status": "Open",
+                  "severity": "High",
+                  "type": "Elevation of privilege",
+                  "title": "Crafted query",
+                  "description": "Crafted query can exploit a privilege escalation",
+                  "mitigation": "cleanse queries"
+                }
+              ],
+              "attrs": {
+                ".marker-target": {
+                  "class": "marker-target hasOpenThreats isInScope"
+                },
+                ".connection": {
+                  "class": "connection hasOpenThreats isInScope"
+                }
+              }
             }
           ]
         },
