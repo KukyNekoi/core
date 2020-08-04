@@ -1,0 +1,11 @@
+{
+  "summary": {
+    "title": "Security project 2",
+    "owner": "Erik Regla",
+    "description": "Threat modeling for ThinkAgro"
+  },
+  "detail": {
+    "contributors": [],
+    "diagrams": []
+  }
+}
